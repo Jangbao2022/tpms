@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Index</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">培养方案</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active">培养方案</li>
+                    </ol>
+                </div>
+                <div th:replace="fragment::logon"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div>
+                                    <h5 class="card-title">历史/当前培养方案</h5>
+                                </div>
+                                <div class="ml-auto">
+                                    <select class="custom-select b-0">
+                                        <option selected="">当前</option>
+                                        <option value="3">历史</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table-responsive m-t-20 no-wrap">
+                                <table class="table vm no-th-brd pro-of-month">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>方案名</th>
+                                        <th>对应专业</th>
+                                        <th>年级</th>
+                                        <th>必修学分</th>
+                                        <th>必修学时</th>
+                                        <th>选修学分</th>
+                                        <th>选修学时</th>
+                                        <th rowspan="2" style="text-align: center;">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="currExp,currStat:${currExps}"
+                                        onclick="draft(this)" th:data-study="${currExp.study.beString()}">
+                                        <th th:text="${currStat.index+1}">1</th>
+                                        <th th:text="${currExp.curr.name}">物联网</th>
+                                        <th th:text="${currExp.curr.majorId}">物联网</th>
+                                        <th th:text="${currExp.curr.grade}">2018</th>
+                                        <th th:text="${currExp.curr.needObligatoryCredit}">100</th>
+                                        <th th:text="${currExp.curr.needObligatoryClassHour}">200</th>
+                                        <th th:text="${currExp.curr.needElectiveCredit}">200</th>
+                                        <th th:text="${currExp.curr.needElectiveClassHour}">200</th>
+                                        <th>修改</th>
+                                        <th>删除</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+
+                <div class="col-lg-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex m-b-30 no-block">
+                                <h5 class="card-title m-b-0 align-self-center">饼状图</h5>
+                                <div class="ml-auto">
+                                    <span id="change1" style="color: #24d2b5;" onclick="changeDraftType(1)">必修</span>
+                                    <span id="change2" onclick="changeDraftType(2)">选修</span>
+
+                                </div>
+                            </div>
+                            <div id="visitor" style="height:260px; width:100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"></footer>
+    </div>
+</div>
+<script src="../assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap popper Core JavaScript -->
+<script src="../assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="../assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+<!--morris JavaScript -->
+<script src="../assets/node_modules/raphael/raphael-min.js"></script>
+<script src="../assets/node_modules/morrisjs/morris.min.js"></script>
+<!--c3 JavaScript -->
+<script src="../assets/node_modules/d3/d3.min.js"></script>
+<script src="../assets/node_modules/c3-master/c3.min.js"></script>
+<!-- Chart JS -->
+<script src="/js/dashboard1.js"></script>
+</body>
+
+</html>

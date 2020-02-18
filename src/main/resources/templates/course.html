@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Course</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">课程信息</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active">课程信息</li>
+                    </ol>
+                </div>
+                <div th:replace="fragment::logon"></div>
+            </div>
+            <div class="row">
+                <!-- column -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="float: left;">课程信息</h4>
+                            <a href="/logon" class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
+                               style="margin-right: 5%; margin-bottom: 2%;">添加课程</a>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>课程名</th>
+                                        <th>选/必</th>
+                                        <th>学分</th>
+                                        <th>学时</th>
+                                        <th rowspan="2" style="text-align: center;">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="course,courseStat:${courses}">
+                                        <td th:text="${courseStat.index+1}">1</td>
+                                        <td th:text="${course.name}">@Genelia</td>
+                                        <td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>
+                                        <td th:text="${course.credit}">Prohaska</td>
+                                        <td th:text="${course.classHour}">@Genelia</td>
+                                        <td><a>修改</a></td>
+                                        <td><a>删除</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"></footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+<!-- jQuery peity -->
+<script src="/assets/node_modules/peity/jquery.peity.min.js"></script>
+<script src="/assets/node_modules/peity/jquery.peity.init.js"></script>
+</body>
+
+</html>

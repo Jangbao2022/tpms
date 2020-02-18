@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Kodinger">
+    <title>TPMS - Login</title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/my-login.css">
+</head>
+<body class="my-login-page">
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+            <div class="card-wrapper">
+                <div class="brand">
+                    <img src="/img/logo.jpg">
+                </div>
+                <div class="card fat">
+                    <div class="card-body">
+                        <h4 class="card-title">登录</h4>
+                        <form action="/login" method="POST">
+
+                            <div class="form-group">
+                                <label for="account">账号</label>
+
+                                <input id="account" type="text" class="form-control" name="account" required
+                                       value="1764791181" autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">密码</label>
+                                <input id="password" type="password" class="form-control" name="password"
+                                       value="pawn2588" required>
+                            </div>
+
+                            <!--<div>-->
+                            <!--<label>-->
+                            <!--<input type="checkbox" name="remember"> 记住密码-->
+                            <!--</label>-->
+                            <!--</div>-->
+
+                            <div class="form-group no-margin">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    登录
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <footer th:replace="fragment::footer"></footer>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/js/my-login.js"></script>
+</body>
+</html>

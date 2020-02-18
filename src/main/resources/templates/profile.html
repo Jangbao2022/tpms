@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Profile</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">个人信息</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active">个人信息</li>
+                    </ol>
+                </div>
+                <div th:replace="fragment::logon"></div>
+            </div>
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-4 col-xlg-3 col-md-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <center class="m-t-30"><img src="../assets/images/users/5.jpg" class="img-circle"
+                                                        width="150"/>
+                                <h4 class="card-title m-t-10" th:text="${session.userExp.user.name}"></h4>
+                                <h6 class="card-subtitle" th:text="${session.userExp.title}"></h6>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <!-- Column -->
+                <div class="col-lg-8 col-xlg-9 col-md-7">
+                    <div class="card">
+                        <!-- Tab panes -->
+                        <div class="card-body">
+                            <form class="form-horizontal form-material" method="post" action="/user/upMyData">
+                                <div class="form-group">
+                                    <label class="col-md-12">姓名</label>
+                                    <div class="col-md-12">
+                                        <p th:text="${session.userExp.user.name}"
+                                           class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">账号</label>
+                                    <div class="col-md-12">
+                                        <input type="text" minlength="6" maxlength="10" name="account"
+                                               th:value="${session.userExp.user.account}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">密码</label>
+                                    <div class="col-md-12">
+                                        <input type="password" minlength="8" maxlength="20" name="password"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div th:if="${session.userExp.student}">
+                                    <div class="form-group">
+                                        <label class="col-md-12">专业</label>
+                                        <div class="col-md-12">
+                                            <p th:text="${session.userExp.major.name}"
+                                               class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">入学日</label>
+                                        <div class="col-md-12">
+                                            <p th:text="${#dates.format(session.userExp.user.intake,'yyyy/MM/dd')}"
+                                               class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">-->
+                                <!--<label class="col-sm-12">Select Country</label>-->
+                                <!--<div class="col-sm-12">-->
+                                <!--<select class="form-control form-control-line">-->
+                                <!--<option>London</option>-->
+                                <!--<option>India</option>-->
+                                <!--<option>Usa</option>-->
+                                <!--<option>Canada</option>-->
+                                <!--<option>Thailand</option>-->
+                                <!--</select>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input type="submit" value="更新信息" class="btn btn-success">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"></footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+</body>
+
+</html>
