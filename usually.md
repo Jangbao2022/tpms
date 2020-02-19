@@ -17,4 +17,4 @@ taskkill /F /PID 1234
 
 
 ###liunx后台挂起运行
-nohup java  -jar -Dspring.profiles.active=production  target/street_workout-0.0.1-SNAPSHOT.jar  &
+nohup java  -jar -Dspring.profiles.active=production  target/tpms-0.0.1-SNAPSHOT.jar  &
