@@ -94,6 +94,10 @@ public class CurriculumController {
 
         //添加课程方案
         curriculumService.addOrUpdateCurriculum(curriculum);
+        if (curriculumId == null) {
+            //或取最近插入的curr的id
+            curriculumId = curriculumService.getLastCurrId();
+        }
         //重新添加课程
         currmidUtil.addCurr(curriculumId, courseIds);
 

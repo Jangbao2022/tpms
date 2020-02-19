@@ -27,7 +27,7 @@
                         <div class="card-body">
                             <div class="d-flex">
                                 <h4 class="card-title" style="float: left;">课程方案</h4>
-                                <a th:if="!${session.userExp.user.power<=4}" href="/curriculum/addCurriculumPage"
+                                <a th:if="!${session.userExp.user.power<4}" href="/curriculum/addCurriculumPage"
                                    class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
                                    style="float: right; margin-top: 2px;margin-left: 67%;">添加方案</a></div>
                             <div class="table-responsive m-t-20 no-wrap">
@@ -61,7 +61,7 @@
                                         <td>
                                             <a th:href=" @{/curriculum/seeMoreById(curriculumId=${currExp.curr.id})}">查看</a>
                                         </td>
-                                        <div th:if="!${session.userExp.user.power<=4}">
+                                        <div th:if="!${session.userExp.user.power<4}">
                                             <td>
                                                 <a th:href="@{/curriculum/updateCurriculumPageById(curriculumId=${currExp.curr.id})}">修改</a>
                                             </td>

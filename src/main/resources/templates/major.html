@@ -27,7 +27,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="float: left;">专业信息</h4>
-                            <a th:if="!${session.userExp.user.power<=4}" href="/major/addMajorPage"
+                            <a th:if="!${session.userExp.user.power<4}" href="/major/addMajorPage"
                                class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
                                style="margin-right: 5%; margin-bottom: 2%;">添加专业</a>
                             <div class="table-responsive">
@@ -38,7 +38,7 @@
                                         <th>专业名</th>
                                         <th>创建时间</th>
                                         <th>修改时间</th>
-                                        <div th:if="!${session.userExp.user.power<=4}">
+                                        <div th:if="!${session.userExp.user.power<4}">
                                             <th rowspan="2" style="text-align: center;">操作</th>
                                         </div>
                                     </tr>
@@ -49,7 +49,7 @@
                                         <td th:text="${major.name}">软件工程</td>
                                         <td th:text="${#dates.format(major.gmtCreated,'yyyy/MM/dd')}">2012/12/12</td>
                                         <td th:text="${#dates.format(major.gmtModified,'yyyy/MM/dd')}">2012/12/12</td>
-                                        <div th:if="!${session.userExp.user.power<=4}">
+                                        <div th:if="!${session.userExp.user.power<4}">
                                             <td><a th:href="@{/major/updateMajorPageById(majorId=${major.id})}">修改</a>
                                             </td>
                                             <td><a th:href=" @{/major/deleteMajorById(majorId=${major.id})}">删除</a></td>

@@ -106,7 +106,7 @@
                 <li><a class="waves-effect waves-dark" href="/major/getMajorByPage" aria-expanded="false"><i
                         class="fa fa-smile-o"></i><span class="hide-menu">专业管理</span></a>
                 </li>
-                <li><a th:if="!${session.userExp.user.power<=5}" class="waves-effect waves-dark"
+                <li><a th:if="!${session.userExp.user.power<5}" class="waves-effect waves-dark"
                        href="/user/getUerByPage" aria-expanded="false">
                     <i class="fa fa-globe"></i><span class="hide-menu">用户管理</span></a>
                 </li>

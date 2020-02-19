@@ -5,18 +5,15 @@ import com.itcast.tpms.enums.PageUrlEnum;
 import com.itcast.tpms.exp.CurriculumExp;
 import com.itcast.tpms.mapper.CurriculumMapper;
 import com.itcast.tpms.mapper.MajorMapper;
-import com.itcast.tpms.model.Course;
 import com.itcast.tpms.model.Curriculum;
 import com.itcast.tpms.model.CurriculumExample;
 import com.itcast.tpms.model.Major;
 import com.itcast.tpms.service.curriculumSerivce.ICurriculumService;
 import com.itcast.tpms.utils.currmidUtil.ICurrmidUtil;
-import com.itcast.tpms.utils.currmidUtil.impl.CurrmidUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -138,7 +135,6 @@ public class CurriculumServiceImpl implements ICurriculumService {
         return i == 1;
     }
 
-
     @Override
     public boolean deleteCurriculum(Long curriculumId) {
 
@@ -171,5 +167,13 @@ public class CurriculumServiceImpl implements ICurriculumService {
         for (Curriculum curriculum : curricula) {
             deleteCurriculum(curriculum.getId());
         }
+    }
+
+    @Override
+    public Long getLastCurrId() {
+        CurriculumExample example = new CurriculumExample();
+        List<Curriculum> curricula = curriculumMapper.selectByExample(example);
+        return curricula.get(curricula.size() - 1).getId();
+
     }
 }

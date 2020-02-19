@@ -37,4 +37,11 @@ public interface ICurriculumService {
     void deleteCurrByMajorId(Long majorId);
 
 
+    /**
+     * 获取最后一个curr的Id
+     *
+     * @return
+     */
+    Long getLastCurrId();
+
 }
