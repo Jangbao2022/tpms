@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Course</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor" th:text="${user==null}?'添加':'更新'+'用户'">更新/添加课程</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active" th:text="${user==null}?'添加':'更新'+'用户'">更新/添加课程</li>
+                    </ol>
+                </div>
+                <div th:replace=" fragment::logon
+                        ">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="" method="post" action="/user/addOrUpdateUser">
+                                <input th:if="${user!=null}" hidden="hidden" name="id"
+                                       th:value="${user!=null?user.id:''}">
+                                <div class="form-group">
+                                    <label class="col-md-12">用户名</label>
+                                    <div class="col-md-12">
+                                        <input type="text" required="required" name="name"
+                                               th:value="${user!=null?user.name:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">类型</label>
+                                    <!--<div class="col-md-12">-->
+                                    <div style="margin-left: 30%;float: left;">
+                                        学生:<input required="required" type="radio" name="power" value="1"
+                                                  th:checked="${user!=null&&user.power==1}">
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        教辅人员:<input required="required" type="radio" name="power" value="2"
+                                                    th:checked="${user!=null&&user.power==2}">
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        普通老师:<input required="required" type="radio" name="power" value="3"
+                                                    th:checked="${user!=null&&user.power==3}">
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        教研处老师:<input required="required" type="radio" name="power" value="4"
+                                                     th:checked="${user!=null&&user.power==4}">
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        超管:<input required="required" type="radio" name="power" value="5"
+                                                  th:checked="${user!=null&&user.power==5}">
+                                    </div>
+                                    <!--</div>-->
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">账号</label>
+                                    <div class="col-md-12">
+                                        <input type="number" minlength="6" maxlength="10" required="required"
+                                               name="account"
+                                               th:value="${user!=null?user.account:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">密码</label>
+                                    <div class="col-md-12">
+                                        <input type="password" minlength="8" maxlength="20" required="required"
+                                               name="password"
+                                               th:value="${user!=null?user.password:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class=" form-group">
+                                    <label class="col-md-12" style="margin-top: 20px">专业(学生)</label>
+                                    <div class="col-md-12">
+                                        <div style="margin-left: 30%;float: left;">
+                                            <input th:each="major:${majors}" required="required" type="radio"
+                                                   name="majorId"
+                                                   th:checked="${user!=null&&user.majorId==major.id}"
+                                                   th:value="${major.id}" th:text="${major.name}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 5%">
+                                    <div class="col-sm-12">
+                                        <input type="submit" value="提交" class="btn btn-success">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"> © 2018 Adminwrap by wrappixe</footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+</body>
+
+</html>

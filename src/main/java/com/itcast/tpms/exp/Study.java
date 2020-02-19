@@ -2,6 +2,7 @@ package com.itcast.tpms.exp;
 
 import com.itcast.tpms.enums.CourseTypeEnum;
 import com.itcast.tpms.model.Course;
+import com.itcast.tpms.model.Curriculum;
 import lombok.Data;
 
 /**
@@ -12,13 +13,24 @@ import lombok.Data;
 public class Study {
 
     //总共必修学分
-    private Integer totalObligatoryCredit = 0;
+    private Integer totalObligatoryCredit = 10;
+    //缺少必修学分
+    private Integer lackObligatoryCredit = 0;
+
     //总共必修学时
-    private Integer totalObligatoryClassHour = 0;
+    private Integer totalObligatoryClassHour = 10;
+    //缺少必修学分
+    private Integer lackObligatoryClassHour = 0;
+
     //总共选修学分
-    private Integer totalElectiveCredit = 0;
+    private Integer totalElectiveCredit = 10;
+    //缺少选修学分
+    private Integer lackElectiveCredit = 0;
+
     //总共选修学时
-    private Integer totalElectiveClassHour = 0;
+    private Integer totalElectiveClassHour = 10;
+    //缺少选修学时
+    private Integer lackElectiveClassHour = 0;
 
     //学习课程
     public void studyDoCourse(Course course) {
@@ -27,6 +39,30 @@ public class Study {
         this.totalElectiveClassHour += (course.getType().equals(CourseTypeEnum.ELECTIVE.getType()) ? course.getClassHour() : 0);
         this.totalElectiveCredit += (course.getType().equals(CourseTypeEnum.ELECTIVE.getType()) ? course.getCredit() : 0);
     }
+
+    public void setLack(Curriculum curriculum) {
+        //缺少必修学时
+        int lackOCH = curriculum.getNeedObligatoryClassHour() - this.totalObligatoryClassHour;
+        if (lackOCH > 0) {
+            this.lackObligatoryClassHour = lackOCH;
+        }
+        //缺少选修学时
+        int lackECH = curriculum.getNeedElectiveClassHour() - this.totalElectiveClassHour;
+        if (lackECH > 0) {
+            this.lackElectiveClassHour = lackECH;
+        }
+        //缺少必修学分
+        int lackOC = curriculum.getNeedObligatoryCredit() - this.totalObligatoryCredit;
+        if (lackOC > 0) {
+            this.lackObligatoryCredit = lackOC;
+        }
+        //缺少必修学分
+        int lackEC = curriculum.getNeedElectiveCredit() - this.totalElectiveCredit;
+        if (lackEC > 0) {
+            this.lackElectiveCredit = lackEC;
+        }
+    }
+
 
     /**
      * 让前端获取值
@@ -37,6 +73,11 @@ public class Study {
         return totalObligatoryCredit + " "
                 + totalObligatoryClassHour + " "
                 + totalElectiveCredit + " "
-                + totalElectiveClassHour;
+                + totalElectiveClassHour + " " +
+
+                +lackObligatoryCredit + " " +
+                +lackObligatoryClassHour + " " +
+                +lackElectiveCredit + " " +
+                +lackElectiveClassHour + " ";
     }
 }

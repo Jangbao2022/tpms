@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Course</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor" th:text="${course==null}?'添加':'更新'+'课程'">更新/添加课程</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active" th:text="${course==null}?'添加':'更新'+'课程'">更新/添加课程</li>
+                    </ol>
+                </div>
+                <div th:replace=" fragment::logon
+                        ">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="" method="post" action="/course/addOrUpdateCourse">
+                                <input th:if="${course!=null}" hidden="hidden" name="id"
+                                       th:value="${course!=null?course.id:''}">
+                                <div class="form-group">
+                                    <label class="col-md-12">课程名</label>
+                                    <div class="col-md-12">
+                                        <input type="text" required="required" name="name"
+                                               th:value="${course!=null?course.name:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">学分</label>
+                                    <div class="col-md-12">
+                                        <input type="number" required="required" name="credit"
+                                               th:value="${course!=null?course.credit:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">学时</label>
+                                    <div class="col-md-12">
+                                        <input type="number" required="required" name="classHour"
+                                               th:value="${course!=null?course.classHour:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">必选修</label>
+                                    <!--<div class="col-md-12">-->
+                                    <div style="margin-left: 30%;float: left;">
+                                        必修:<input required="required" type="radio" name="type" value="1" checked>
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        选修:<input required="required" type="radio" name="type" value="2"
+                                                  th:checked="${course!=null&&course.type==2}">
+                                    </div>
+                                    <!--</div>-->
+                                </div>
+                                <div class=" form-group" hidden="hidden">
+                                    <label class="col-md-12">讲师</label>
+                                    <div class="col-md-12">
+                                        <input required="required" type="text" name="teacherId" value="2">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 5%">
+                                    <div class="col-sm-12">
+                                        <input type="submit" value="提交" class="btn btn-success">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"> © 2018 Adminwrap by wrappixe</footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+</body>
+
+</html>

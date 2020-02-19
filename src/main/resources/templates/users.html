@@ -27,7 +27,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="float: left;">用户信息</h4>
-                            <a href="/logon" class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
+                            <a href="/user/addUserPage"
+                               class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
                                style="margin-right: 5%; margin-bottom: 2%;">添加用户</a>
                             <div class="table-responsive">
                                 <table class="table">
@@ -36,19 +37,25 @@
                                         <th>#</th>
                                         <th>用户名</th>
                                         <th>账号</th>
+                                        <th>类型</th>
                                         <th rowspan="2" style="text-align: center;">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user,userStat:${users}">
+                                    <tr th:each="userExp,userStat:${pageDto.elements}">
                                         <td th:text="${userStat.index+1}">1</td>
-                                        <td th:text="${user.name}">@Genelia</td>
-                                        <td th:text="${user.account}">@Genelia</td>
-                                        <td><a>修改</a></td>
-                                        <td><a>删除</a></td>
+                                        <td th:text="${userExp.user.name}">@Genelia</td>
+                                        <td th:text="${userExp.user.account}">@Genelia</td>
+                                        <td th:text="${userExp.title}">@Genelia</td>
+                                        <td><a th:href="@{/user/updateUserPageById(userId=${userExp.user.id})}">修改</a>
+                                        </td>
+                                        <td><a th:href=" @{/user/updateUserById(userId=${userExp.user.id})}">删除</a>
+                                        </td>
+
                                     </tr>
                                     </tbody>
                                 </table>
+                                <nav th:replace="fragment::changePage"></nav>
                             </div>
                         </div>
                     </div>

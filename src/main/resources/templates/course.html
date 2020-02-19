@@ -27,7 +27,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="float: left;">课程信息</h4>
-                            <a href="/logon" class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
+                            <a th:if="!${session.userExp.user.power<=2}" href="/course/addCoursePage"
+                               class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
                                style="margin-right: 5%; margin-bottom: 2%;">添加课程</a>
                             <div class="table-responsive">
                                 <table class="table">
@@ -38,21 +39,29 @@
                                         <th>选/必</th>
                                         <th>学分</th>
                                         <th>学时</th>
-                                        <th rowspan="2" style="text-align: center;">操作</th>
+                                        <div th:if="!${session.userExp.user.power<=2}">
+                                            <th rowspan="2" style="text-align: center;">操作</th>
+                                        </div>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="course,courseStat:${courses}">
+                                    <tr th:each="course,courseStat:${pageDto.elements}">
                                         <td th:text="${courseStat.index+1}">1</td>
                                         <td th:text="${course.name}">@Genelia</td>
                                         <td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>
                                         <td th:text="${course.credit}">Prohaska</td>
                                         <td th:text="${course.classHour}">@Genelia</td>
-                                        <td><a>修改</a></td>
-                                        <td><a>删除</a></td>
+                                        <div th:if="!${session.userExp.user.power<=2}">
+                                            <td>
+                                                <a th:href="@{/course/updateCoursePageById(courseId=${course.id})}">修改</a>
+                                            </td>
+                                            <td><a th:href=" @{/course/deleteCourseById(courseId=${course.id})}">删除</a>
+                                            </td>
+                                        </div>
                                     </tr>
                                     </tbody>
                                 </table>
+                                <nav th:replace="fragment::changePage"></nav>
                             </div>
                         </div>
                     </div>

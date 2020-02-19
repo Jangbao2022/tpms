@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Course</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor" th:text="${curriculumExp==null}?'添加':'更新'+'方案'">更新/添加课程</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active" th:text="${curriculumExp==null}?'添加':'更新'+'方案'">更新/添加课程</li>
+                    </ol>
+                </div>
+                <div th:replace=" fragment::logon
+                        ">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="" method="post" action="/curriculum/addOrUpdateCurriculum">
+                                <input th:if="${curriculumExp!=null}" hidden="hidden" name="id"
+                                       th:value="${curriculumExp!=null?curriculumExp.curr.id:''}">
+                                <div class="form-group">
+                                    <label class="col-md-12">方案名</label>
+                                    <div class="col-md-12">
+                                        <input type="text" required="required" name="name"
+                                               th:value="${curriculumExp!=null?curriculumExp.curr.name:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">需要必修学分</label>
+                                    <div class="col-md-12">
+                                        <input type="number" required="required" name="needObligatoryCredit"
+                                               th:value="${curriculumExp!=null?curriculumExp.curr.needObligatoryCredit:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">需要必修学时</label>
+                                    <div class="col-md-12">
+                                        <input type="number" required="required" name="needObligatoryClassHour"
+                                               th:value="${curriculumExp!=null?curriculumExp.curr.needObligatoryClassHour:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">需要选修学分</label>
+                                    <div class="col-md-12">
+                                        <input type="number" required="required" name="needElectiveCredit"
+                                               th:value="${curriculumExp!=null?curriculumExp.curr.needElectiveCredit:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">需要选修学时</label>
+                                    <div class="col-md-12">
+                                        <input type="number" required="required" name="needElectiveClassHour"
+                                               th:value="${curriculumExp!=null?curriculumExp.curr.needElectiveClassHour:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">年级</label>
+                                    <!--<div class="col-md-12">-->
+                                    <div style="margin-left: 30%;float: left;">
+                                        大一:<input required="required" type="radio" name="grade" value="大一" checked>
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        大二:<input required="required" type="radio" name="grade" value="大二"
+                                                  th:checked="${curriculumExp!=null&&curriculumExp.curr.grade=='大二'}">
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        大三:<input required="required" type="radio" name="grade" value="大三"
+                                                  th:checked="${curriculumExp!=null&&curriculumExp.curr.grade=='大三'}">
+                                    </div>
+                                    <div style="margin-left: 30%;float: left;">
+                                        大四:<input required="required" type="radio" name="grade" value="大四"
+                                                  th:checked="${curriculumExp!=null&&curriculumExp.curr.grade=='大四'}">
+                                    </div>
+                                    <!--</div>-->
+                                </div>
+                                <div class=" form-group">
+                                    <label class="col-md-12" style="margin-top: 20px">是否设为当前方案</label>
+                                    <div class="col-md-12">
+                                        <div style="margin-left: 30%;float: left;">
+                                            是:<input required="required" type="radio" name="current" value="1">
+                                        </div>
+                                        <div style="margin-left: 30%;float: left;">
+                                            否:<input required="required" type="radio" name="current" value="0" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" form-group">
+                                    <label class="col-md-12" style="margin-top: 20px">专业</label>
+                                    <div class="col-md-12">
+                                        <div style="margin-left: 30%;float: left;">
+                                            <input th:each="major:${majors}" required="required" type="radio"
+                                                   name="majorId"
+                                                   th:checked="${curriculumExp!=null&&curriculumExp.curr.majorId==major.id}"
+                                                   th:value="${major.id}" th:text="${major.name}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class=" form-group">
+                                    <label class="col-md-12" style="margin-top: 20px">课程</label>
+                                    <div class="col-md-12">
+                                        <div style="width: 20%; float: left;" th:each="course:${courses}">
+                                            <input type="checkbox" th:text="${course.name}" name="courseId"
+                                                   th:if="${curriculumExp!=null&&curriculumExp.courseIds.contains(course.id)}"
+                                                   th:value="${course.id}" checked>
+                                            <input type="checkbox" th:text="${course.name}" name="courseId"
+                                                   th:if="!${curriculumExp!=null&&curriculumExp.courseIds.contains(course.id)}"
+                                                   th:value="${course.id}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 5%; width: 100%; float: left;">
+                                    <div class="col-sm-12">
+                                        <input type="submit" style="float: left" value="提交" class="btn btn-success">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"> © 2018 Adminwrap by wrappixe</footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+</body>
+
+</html>

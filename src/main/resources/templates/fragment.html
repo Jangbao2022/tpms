@@ -1,12 +1,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--被引用的片段-->
 <body>
+
+<!--退出登录-->
 <div class="col-md-7 align-self-center" th:fragment="logon">
     <a href="/logon" class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down">
         退出登录
     </a>
 </div>
 
+<!--头部引用-->
 <head th:fragment="headImport">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
     <!-- Bootstrap Core CSS -->
     <link href="/assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/node_modules/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
@@ -38,6 +41,7 @@
     <![endif]-->
 </head>
 
+<!--加载图-->
 <div class="preloader" th:fragment="preloader">
     <div class="loader">
         <div class="loader__figure"></div>
@@ -45,10 +49,11 @@
     </div>
 </div>
 
+<!--顶部栏-->
 <header class="topbar" th:fragment="topbar">
     <nav class="navbar top-navbar navbar-expand-md navbar-light">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index">
+            <a class="navbar-brand" href="/index">
                 <img src="/assets/images/logo-icon.png" alt="homepage" class="dark-logo" style="width: 50px"/>
                 <img src="/assets/images/logo-light-icon.png" alt="homepage" class="light-logo"/>
                 </b>
@@ -62,9 +67,11 @@
                 <li class="nav-item hidden-xs-down search-box"><a
                         class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
                         class="fa fa-search"></i></a>
-                    <form class="app-search">
-                        <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i
-                            class="fa fa-times"></i></a></form>
+                    <form class="app-search" action="/search">
+                        <input type="text" name="keyword" class="form-control" placeholder="搜索培养方案(输入名字或年级按下回车)">
+                        <a class="srh-btn"><i class="fa fa-times"></i>
+                        </a>
+                    </form>
                 </li>
             </ul>
             <ul class="navbar-nav my-lg-0">
@@ -80,6 +87,7 @@
     </nav>
 </header>
 
+<!--左侧边栏-->
 <aside class="left-sidebar" th:fragment="left-sidebar">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
@@ -89,7 +97,7 @@
                 <li><a class="waves-effect waves-dark" href="/page/profile" aria-expanded="false"><i
                         class="fa fa-user-circle-o"></i><span class="hide-menu">我的信息</span></a>
                 </li>
-                <li><a class="waves-effect waves-dark" href="/getCurriculumByPage" aria-expanded="false"><i
+                <li><a class="waves-effect waves-dark" href="/curriculum/getCurriculumByPage" aria-expanded="false"><i
                         class="fa fa-tachometer"></i><span class="hide-menu">培养方案</span></a>
                 </li>
                 <li><a class="waves-effect waves-dark" href="/course/getCourseByPage" aria-expanded="false"><i
@@ -98,8 +106,9 @@
                 <li><a class="waves-effect waves-dark" href="/major/getMajorByPage" aria-expanded="false"><i
                         class="fa fa-smile-o"></i><span class="hide-menu">专业管理</span></a>
                 </li>
-                <li><a class="waves-effect waves-dark" href="/user/getAllUerByPage" aria-expanded="false"><i
-                        class="fa fa-globe"></i><span class="hide-menu">用户管理</span></a>
+                <li><a th:if="!${session.userExp.user.power<=5}" class="waves-effect waves-dark"
+                       href="/user/getUerByPage" aria-expanded="false">
+                    <i class="fa fa-globe"></i><span class="hide-menu">用户管理</span></a>
                 </li>
             </ul>
         </nav>
@@ -108,8 +117,17 @@
     <!-- End Sidebar scroll-->
 </aside>
 
-<footer class="footer" th:fragment="footer"> © 2020 Training Program Management System - boob
-</footer>
+<!--分页-->
+<nav th:fragment="changePage" style="margin-top: 10px;padding-bottom: 40px;">
+    <a th:href="@{${pageDto.pageUrl}(page=${pageDto.prePage})}"
+       style="float: left"><span aria-hidden="true">&larr;</span>
+        前一页</a>
+    <a th:href="@{${pageDto.pageUrl}(page=${pageDto.prePage})}"
+       style="float: right">后一页 <span aria-hidden="true">&rarr;</span></a>
+</nav>
+
+<!--底部-->
+<footer class="footer" th:fragment="footer"> © 2020 Training Program Management System - boob</footer>
 
 </body>
 </html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Curr</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">方案信息</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active">方案信息</li>
+                    </ol>
+                </div>
+                <div th:replace="fragment::logon"></div>
+            </div>
+            <div class="row">
+                <!-- column -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="float: left;" th:text="${currExp.curr.name}">方案信息</h4>
+                            <a th:href="@{/curriculum/updateCurriculumPageById(curriculumId=${currExp.curr.id})}"
+                               th:if="!${session.userExp.user.power<=4}"
+                               class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
+                               style="margin-right: 5%; margin-bottom: 2%;">修改方案</a>
+                            <a th:href="@{/download(curriculumId=${currExp.curr.id})}"
+                               class="btn waves-effect waves-light btn btn-primary pull-right hidden-sm-down"
+                               style="margin-right: 5%; margin-bottom: 2%;">下载方案</a>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>课程名</th>
+                                        <th>选/必</th>
+                                        <th>学分</th>
+                                        <th>学时</th>
+                                        <th th:if="!${session.userExp.user.power<=4}">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="course,courseStat:${currExp.courses}">
+                                        <td th:text="${courseStat.index+1}">1</td>
+                                        <td th:text="${course.name}">@Genelia</td>
+                                        <td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>
+                                        <td th:text="${course.credit}">Prohaska</td>
+                                        <td th:text="${course.classHour}">@Genelia</td>
+                                        <td th:if="!${session.userExp.user.power<=4}">
+                                            <a th:href=" @{/curriculum/deleteCourseAtCurr(courseId=${course.id},curriculumId=${currExp.curr.id})}">删除</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <h5 class="card-title" style="float: left;margin-top: 16px;margin-bottom: 21px">
+                                    完成情况</h5>
+                                <table class="table">
+                                    <tr>
+                                        <td>需要必修学时</td>
+                                        <td th:text="${currExp.curr.needObligatoryClassHour}">num</td>
+                                        <td>完成必修学时</td>
+                                        <td th:text="${currExp.study.totalObligatoryClassHour}">num</td>
+                                        <td>未完成必修学时</td>
+                                        <td th:text="${currExp.study.lackObligatoryClassHour}">num</td>
+                                    </tr>
+                                    <tr>
+                                        <td>需要选修学时</td>
+                                        <td th:text="${currExp.curr.needElectiveClassHour}">num</td>
+                                        <td>完成选修学时</td>
+                                        <td th:text="${currExp.study.totalElectiveClassHour}">num</td>
+                                        <td>未完成选修学时</td>
+                                        <td th:text="${currExp.study.lackElectiveClassHour}">num</td>
+                                    </tr>
+                                    <tr>
+                                        <td>需要必修学分</td>
+                                        <td th:text="${currExp.curr.needObligatoryCredit}">num</td>
+                                        <td>完成必修学分</td>
+                                        <td th:text="${currExp.study.totalObligatoryCredit}">num</td>
+                                        <td>未完成必修学分</td>
+                                        <td th:text="${currExp.study.lackObligatoryCredit}">num</td>
+                                    </tr>
+                                    <tr>
+                                        <td>需要选修学分</td>
+                                        <td th:text="${currExp.curr.needElectiveCredit}">num</td>
+                                        <td>完成选修学分</td>
+                                        <td th:text="${currExp.study.totalElectiveCredit}">num</td>
+                                        <td>未完成选修学分</td>
+                                        <td th:text="${currExp.study.lackElectiveCredit}">num</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"></footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+<!-- jQuery peity -->
+<script src="/assets/node_modules/peity/jquery.peity.min.js"></script>
+<script src="/assets/node_modules/peity/jquery.peity.init.js"></script>
+</body>
+
+</html>

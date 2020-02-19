@@ -3,8 +3,8 @@ package com.itcast.tpms.enums;
 public enum UserPowerEnum {
 
     STUDENT(1, "学生"),
-    SUPPORT_STAFF(2, "教辅人员"),
-    ORDINARY_TEACHER(3, "普通老师"),
+    ORDINARY_TEACHER(2, "普通老师"),
+    SUPPORT_STAFF(3, "教辅人员"),
     SUPER_TEACHER(4, "教研处老师"),
     SUPER_ADMINISTRATOR(5, "超级管理员"),
     ;

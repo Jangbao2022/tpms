@@ -7,15 +7,30 @@ File: js
 
 //总共必修学分
 var totalObligatoryCredit = 10;
+//缺少必修学分
+var lackObligatoryCredit = 0;
+
 //总共必修学时
 var totalObligatoryClassHour = 10;
+//缺少必修学分
+var lackObligatoryClassHour = 0;
+
 //总共选修学分
 var totalElectiveCredit = 10;
+//缺少选修学分
+var lackElectiveCredit = 0;
+
 //总共选修学时
 var totalElectiveClassHour = 10;
+//缺少选修学时
+var lackElectiveClassHour = 0;
 
 var chart_data_columns = [['必修学分', totalObligatoryCredit],
-    ['选修学分', totalElectiveCredit]];
+        ['选修学分', totalElectiveCredit],
+        ['缺少必修学分', lackObligatoryCredit],
+        ['缺少选修学分', lackElectiveCredit],
+    ]
+;
 
 var chart_donut_title = "学分";
 
@@ -27,7 +42,10 @@ function changeDraftType(type) {
     draftType = type;
     if (type == 1) {
         chart_data_columns = [['必修学分', totalObligatoryCredit],
-            ['选修学分', totalElectiveCredit]];
+            ['选修学分', totalElectiveCredit],
+            ['缺少必修学分', lackObligatoryCredit],
+            ['缺少选修学分', lackElectiveCredit],
+        ]
         chart_donut_title = '学分';
         document.getElementById("change1").removeAttribute("style")
         document.getElementById("change2").removeAttribute("style")
@@ -35,7 +53,10 @@ function changeDraftType(type) {
 
     } else {
         chart_data_columns = [['必修学时', totalObligatoryClassHour],
-            ['选修学时', totalElectiveClassHour]];
+            ['选修学时', totalElectiveClassHour],
+            ['缺少必修学时', lackObligatoryClassHour],
+            ['缺少选修学时', lackElectiveClassHour],
+        ]
         chart_donut_title = '学时';
         document.getElementById("change1").removeAttribute("style")
         document.getElementById("change2").removeAttribute("style")
@@ -58,6 +79,11 @@ function draft(element) {
     totalObligatoryClassHour = data[1];
     totalElectiveCredit = data[2];
     totalElectiveClassHour = data[3];
+
+    lackObligatoryCredit = data[4];
+    lackObligatoryClassHour = data[5];
+    lackElectiveCredit = data[6];
+    lackElectiveClassHour = data[7];
 
     changeDraftType(1);
 }
@@ -85,7 +111,7 @@ function draftCircle(type) {
                 hide: false
             },
             color: {
-                pattern: ['#42e34d', '#24d2b5']
+                pattern: ['#42e34d', '#24d2b5', '#d27b4d', '#ff1210']
             }
         }
     );

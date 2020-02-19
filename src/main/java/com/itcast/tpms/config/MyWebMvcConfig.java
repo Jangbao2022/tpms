@@ -1,6 +1,6 @@
 package com.itcast.tpms.config;
 
-import com.itcast.tpms.interceptor.LoginInterceptor;
+import com.itcast.tpms.interceptor.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -18,7 +18,6 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/index").setViewName("profile");
         registry.addViewController("/main").setViewName("profile");
         registry.addViewController("/page/login").setViewName("login");
-        registry.addViewController("/page/blank").setViewName("blank");
         registry.addViewController("/page/profile").setViewName("profile");
     }
 
@@ -46,5 +45,51 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(excludePathPatterns);
+
+        registry.addInterceptor(new OneLevelPowerInterceptor())
+                .addPathPatterns("/course/**")
+                .excludePathPatterns("/course/getCourseByPage")
+
+                .addPathPatterns("/curriculum/**")
+                .excludePathPatterns("/curriculum/getCurriculumByPage")
+                .excludePathPatterns("/curriculum/seeMoreById")
+
+                .addPathPatterns("/major/**")
+                .excludePathPatterns("/major/getMajorByPage")
+
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/upMyData");
+
+//        registry.addInterceptor(new TwoLevelPowerInterceptor())
+//                .addPathPatterns("/course/**")
+//                .excludePathPatterns("/course/getCourseByPage")
+//
+//                .addPathPatterns("/curriculum/**")
+//                .excludePathPatterns("/getCurriculumByPage")
+//
+//                .addPathPatterns("/major/**")
+//                .excludePathPatterns("getMajorByPage")
+//
+//                .addPathPatterns("/user/**")
+//                .excludePathPatterns("/user/getUerByPage");
+
+
+        registry.addInterceptor(new ThreeLevelPowerInterceptor())
+                .addPathPatterns("/course/deleteCourseById")
+
+                .addPathPatterns("/curriculum/**")
+                .excludePathPatterns("/curriculum/getCurriculumByPage")
+                .excludePathPatterns("/curriculum/seeMoreById")
+
+                .addPathPatterns("/major/**")
+                .excludePathPatterns("/major/getMajorByPage")
+
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/upMyData");
+
+        registry.addInterceptor(new FourLevelPowerInterceptor())
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/upMyData");
+
     }
 }

@@ -26,16 +26,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex">
-                                <div>
-                                    <h5 class="card-title">历史/当前培养方案</h5>
-                                </div>
-                                <div class="ml-auto">
-                                    <select class="custom-select b-0">
-                                        <option selected="">当前</option>
-                                        <option value="3">历史</option>
-                                    </select>
-                                </div>
-                            </div>
+                                <h4 class="card-title" style="float: left;">课程方案</h4>
+                                <a th:if="!${session.userExp.user.power<=4}" href="/curriculum/addCurriculumPage"
+                                   class="btn waves-effect waves-light btn btn-info pull-right hidden-sm-down"
+                                   style="float: right; margin-top: 2px;margin-left: 67%;">添加方案</a></div>
                             <div class="table-responsive m-t-20 no-wrap">
                                 <table class="table vm no-th-brd pro-of-month">
                                     <thead>
@@ -44,29 +38,41 @@
                                         <th>方案名</th>
                                         <th>对应专业</th>
                                         <th>年级</th>
-                                        <th>必修学分</th>
-                                        <th>必修学时</th>
-                                        <th>选修学分</th>
-                                        <th>选修学时</th>
+                                        <th>类型</th>
+                                        <th>学分(必/选)</th>
+                                        <th>学时(必/选)</th>
                                         <th rowspan="2" style="text-align: center;">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="currExp,currStat:${currExps}"
+                                    <tr th:each="currExp,currStat:${pageDto.elements}"
                                         onclick="draft(this)" th:data-study="${currExp.study.beString()}">
                                         <th th:text="${currStat.index+1}">1</th>
                                         <th th:text="${currExp.curr.name}">物联网</th>
-                                        <th th:text="${currExp.curr.majorId}">物联网</th>
+                                        <th th:text="${currExp.major.name}">物联网</th>
                                         <th th:text="${currExp.curr.grade}">2018</th>
-                                        <th th:text="${currExp.curr.needObligatoryCredit}">100</th>
-                                        <th th:text="${currExp.curr.needObligatoryClassHour}">200</th>
-                                        <th th:text="${currExp.curr.needElectiveCredit}">200</th>
-                                        <th th:text="${currExp.curr.needElectiveClassHour}">200</th>
-                                        <th>修改</th>
-                                        <th>删除</th>
+                                        <th th:text="${currExp.curr.current==1?'当前':'历史'}">2018</th>
+                                        <th th:text="${currExp.curr.needObligatoryCredit}+'/'+${currExp.curr.needElectiveCredit}">
+                                            100
+                                        </th>
+                                        <th th:text="${currExp.curr.needObligatoryClassHour}+'/'+${currExp.curr.needElectiveClassHour}">
+                                            200
+                                        </th>
+                                        <td>
+                                            <a th:href=" @{/curriculum/seeMoreById(curriculumId=${currExp.curr.id})}">查看</a>
+                                        </td>
+                                        <div th:if="!${session.userExp.user.power<=4}">
+                                            <td>
+                                                <a th:href="@{/curriculum/updateCurriculumPageById(curriculumId=${currExp.curr.id})}">修改</a>
+                                            </td>
+                                            <td>
+                                                <a th:href=" @{/curriculum/deleteCurriculumPageById(curriculumId=${currExp.curr.id})}">删除</a>
+                                            </td>
+                                        </div>
                                     </tr>
                                     </tbody>
                                 </table>
+                                <nav th:replace="fragment::changePage"></nav>
                             </div>
                         </div>
                     </div>
@@ -79,8 +85,8 @@
                             <div class="d-flex m-b-30 no-block">
                                 <h5 class="card-title m-b-0 align-self-center">饼状图</h5>
                                 <div class="ml-auto">
-                                    <span id="change1" style="color: #24d2b5;" onclick="changeDraftType(1)">必修</span>
-                                    <span id="change2" onclick="changeDraftType(2)">选修</span>
+                                    <span id="change1" style="color: #24d2b5;" onclick="changeDraftType(1)">学分</span>
+                                    <span id="change2" onclick="changeDraftType(2)">学时</span>
 
                                 </div>
                             </div>

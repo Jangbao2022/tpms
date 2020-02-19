@@ -45,7 +45,7 @@
                                     <label class="col-md-12">姓名</label>
                                     <div class="col-md-12">
                                         <p th:text="${session.userExp.user.name}"
-                                           class="form-control form-control-line">
+                                           class="form-control form-control-line"></p>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -68,14 +68,7 @@
                                         <label class="col-md-12">专业</label>
                                         <div class="col-md-12">
                                             <p th:text="${session.userExp.major.name}"
-                                               class="form-control form-control-line">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-12">入学日</label>
-                                        <div class="col-md-12">
-                                            <p th:text="${#dates.format(session.userExp.user.intake,'yyyy/MM/dd')}"
-                                               class="form-control form-control-line">
+                                               class="form-control form-control-line"></p>
                                         </div>
                                     </div>
                                 </div>

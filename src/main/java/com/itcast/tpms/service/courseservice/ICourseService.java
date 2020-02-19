@@ -1,5 +1,6 @@
 package com.itcast.tpms.service.courseservice;
 
+import com.itcast.tpms.dto.PageDto;
 import com.itcast.tpms.model.Course;
 
 import java.util.List;
@@ -9,12 +10,18 @@ import java.util.List;
  */
 public interface ICourseService {
 
-    List<Course> getCourseByPage(Integer page, Integer limit);
+    PageDto<Course> getCourseByPage(Integer page, Integer limit);
+
+    Course getCourseById(Long courseId);
+
+    List<Course> getAllCourse();
 
     boolean addCourse(Course course);
 
-    boolean updateCourse(Course Course);
+    boolean updateCourse(Course course);
 
     boolean deleteCourse(Long courseId);
+
+    boolean addOrUpdateCourse(Course course);
 
 }
