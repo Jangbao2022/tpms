@@ -31,7 +31,7 @@ public class DownLoadController {
     public void downLoad(Long curriculumId, HttpServletResponse response) {
 
         CurriculumExp curriculumExp = curriculumService.getCurriculumById(curriculumId);
-        String longString = curriculumExp.getCurr().getName() + "\n";
+        String longString = curriculumExp.getMajor().getName() + "\t\t" + curriculumExp.getCurr().getName() + "\n";
         List<Course> courses = curriculumExp.getCourses();
         for (int i = 0; i < courses.size(); i++) {
             longString += i + "\t\t";
