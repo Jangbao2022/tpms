@@ -1,6 +1,7 @@
 package com.itcast.tpms.service.curriculumSerivce.impl;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
 import com.itcast.tpms.exp.CurriculumExp;
 import com.itcast.tpms.mapper.CurriculumMapper;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -32,64 +32,29 @@ public class CurriculumServiceImpl implements ICurriculumService {
     private ICurrmidUtil currmidUtil;
 
     @Override
-    public PageDto<CurriculumExp> getCurriculumByPage(Integer page, Integer limit) {
+    public PageDto<CurriculumExp> getCurriculumBySearchDto(SearchDto searchDto) {
+
         PageDto<CurriculumExp> curriculumPageDto = new PageDto<>(PageUrlEnum.CURRICULUM_URL.getUrl());
 
-        long total = curriculumMapper.countByExample(new CurriculumExample());
-
-        curriculumPageDto.countTotalPage((int) total, limit);
-        curriculumPageDto.countPreAndAfter(page);
-
-        List<CurriculumExp> currExps = new ArrayList<>();
-        int offset = (curriculumPageDto.getPage() - 1) * limit;
-
-        List<Curriculum> currs = curriculumMapper.selectByExampleWithRowbounds(new CurriculumExample(), new RowBounds(offset, limit));
-        for (Curriculum curr : currs) {
-
-            //通过Id封装
-            CurriculumExp currExp = getCurriculumById(curr.getId());
-
-            //将扩展的课程方案加入集合
-            currExps.add(currExp);
-        }
-
-        curriculumPageDto.setElements(currExps);
-
-        return curriculumPageDto;
-    }
-
-    @Override
-    public PageDto<CurriculumExp> getCurriculumByKeyWord(String keyword, Integer page, Integer limit) {
-
-        PageDto<CurriculumExp> curriculumPageDto = new PageDto<>(PageUrlEnum.CURRICULUM_SEARCH_URL.getUrl());
-
-        HashSet<CurriculumExp> curriculumExps = new HashSet<>();
-
-        List<Curriculum> curricula;
-
-        //按名字搜索
         CurriculumExample example = new CurriculumExample();
-        example.createCriteria().andNameLike("%" + keyword + "%");
-        curricula = curriculumMapper.selectByExample(example);
+
+        if (searchDto.getKeyword() != null && !"null".equals(searchDto.getKeyword())) {
+            example.createCriteria().andNameLike("%" + searchDto.getKeyword() + "%");
+        }
+
+        searchDto.setTotal((int) curriculumMapper.countByExample(example));
+        curriculumPageDto.init(searchDto);
+        searchDto.setOffset((curriculumPageDto.getPage() - 1) * searchDto.getLimit());
+
+        List<Curriculum> curricula = curriculumMapper.selectByExampleWithRowbounds(example, new RowBounds(searchDto.getOffset(), searchDto.getLimit()));
+
+        List<CurriculumExp> curriculumExps = new ArrayList<>();
         for (Curriculum curriculum : curricula) {
             CurriculumExp curriculumById = getCurriculumById(curriculum.getId());
             curriculumExps.add(curriculumById);
         }
 
-        //按年级搜索
-        example.clear();
-        example.createCriteria().andGradeLike("%" + keyword + "%");
-        curricula = curriculumMapper.selectByExample(example);
-        for (Curriculum curriculum : curricula) {
-            CurriculumExp curriculumById = getCurriculumById(curriculum.getId());
-            curriculumExps.add(curriculumById);
-        }
-        ArrayList<CurriculumExp> curriculumExpList = new ArrayList<>(curriculumExps);
-
-        curriculumPageDto.countTotalPage(curriculumExpList.size(), limit);
-        curriculumPageDto.countPreAndAfter(page);
-
-        curriculumPageDto.setElements(curriculumExpList);
+        curriculumPageDto.setElements(curriculumExps);
 
         return curriculumPageDto;
     }

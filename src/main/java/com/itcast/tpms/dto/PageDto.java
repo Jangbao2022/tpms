@@ -42,7 +42,7 @@ public class PageDto<E> {
      *
      * @param total 有多少个elements
      */
-    public void countTotalPage(Integer total, Integer limit) {
+    private void countTotalPage(Integer total, Integer limit) {
         if (total % limit == 0) {
             totalPage = total / limit;
         } else {
@@ -55,7 +55,7 @@ public class PageDto<E> {
      *
      * @param page
      */
-    public void countPreAndAfter(Integer page) {
+    private void countPreAndAfter(Integer page) {
 
         //如果总共只有一页
         if (totalPage <= 1) {
@@ -82,6 +82,12 @@ public class PageDto<E> {
             prePage = this.page - 1;
             afterPage = this.page + 1;
         }
+    }
+
+    public void init(SearchDto searchDto) {
+        countTotalPage(searchDto.getTotal(), searchDto.getLimit());
+        countPreAndAfter(searchDto.getPage() == null ? 1 : searchDto.getPage());
+        pageUrl = searchDto.getKeyword() == null ? pageUrl + "?keyword=" + searchDto.getKeyword() : pageUrl;
     }
 
 

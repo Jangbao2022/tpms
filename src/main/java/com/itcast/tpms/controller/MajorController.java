@@ -1,6 +1,7 @@
 package com.itcast.tpms.controller;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageLimitEnum;
 import com.itcast.tpms.model.Major;
 import com.itcast.tpms.service.curriculumSerivce.ICurriculumService;
@@ -21,11 +22,9 @@ public class MajorController {
     private ICurriculumService curriculumService;
 
     @RequestMapping("getMajorByPage")
-    public String getMajorByPage(Integer page, Model model) {
-        if (page == null || page < 0) {
-            page = 0;
-        }
-        PageDto<Major> majorPageDto = majorService.getMajorByPage(page, PageLimitEnum.MAJOR_LIMIT.getLimit());
+    public String getMajorByPage(SearchDto searchDto, Model model) {
+        searchDto.setLimit(PageLimitEnum.MAJOR_LIMIT.getLimit());
+        PageDto<Major> majorPageDto = majorService.getMajorBySearchDto(searchDto);
         model.addAttribute("pageDto", majorPageDto);
         return "major";
     }

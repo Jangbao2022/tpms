@@ -1,6 +1,7 @@
 package com.itcast.tpms.service.curriculumSerivce;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.exp.CurriculumExp;
 import com.itcast.tpms.model.Course;
 import com.itcast.tpms.model.Curriculum;
@@ -15,9 +16,7 @@ import java.util.List;
  */
 public interface ICurriculumService {
 
-    PageDto<CurriculumExp> getCurriculumByPage(Integer page, Integer limit);
-
-    PageDto<CurriculumExp> getCurriculumByKeyWord(String keyword, Integer page, Integer limit);
+    PageDto<CurriculumExp> getCurriculumBySearchDto(SearchDto searchDto);
 
     CurriculumExp getCurriculumById(Long curriculumId);
 

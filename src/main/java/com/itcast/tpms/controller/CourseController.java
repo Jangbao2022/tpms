@@ -1,6 +1,7 @@
 package com.itcast.tpms.controller;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageLimitEnum;
 import com.itcast.tpms.model.Course;
 import com.itcast.tpms.service.courseservice.ICourseService;
@@ -19,11 +20,10 @@ public class CourseController {
     private ICourseService courseService;
 
     @RequestMapping("getCourseByPage")
-    public String getCourseByPage(Integer page, Model model) {
-        if (page == null || page < 0) {
-            page = 0;
-        }
-        PageDto<Course> coursePageDto = courseService.getCourseByPage(page, PageLimitEnum.COURSE_LIMIT.getLimit());
+    public String getCourseByPage(SearchDto searchDto, Model model) {
+
+        searchDto.setLimit(PageLimitEnum.COURSE_LIMIT.getLimit());
+        PageDto<Course> coursePageDto = courseService.getCourseBySearchDto(searchDto);
         model.addAttribute("pageDto", coursePageDto);
         return "course";
     }
@@ -38,7 +38,7 @@ public class CourseController {
     public String updateCoursePageById(Long courseId, Model model) {
         Course course = courseService.getCourseById(courseId);
         model.addAttribute("course", course);
-        
+
         return "IPCoursePage";
     }
 

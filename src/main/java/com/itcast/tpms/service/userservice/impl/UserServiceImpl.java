@@ -1,10 +1,13 @@
 package com.itcast.tpms.service.userservice.impl;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
 import com.itcast.tpms.enums.UserPowerEnum;
 import com.itcast.tpms.exp.UserExp;
 import com.itcast.tpms.mapper.UserMapper;
+import com.itcast.tpms.model.Major;
+import com.itcast.tpms.model.MajorExample;
 import com.itcast.tpms.model.User;
 import com.itcast.tpms.model.UserExample;
 import com.itcast.tpms.service.userservice.IUserService;
@@ -24,16 +27,19 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public PageDto<UserExp> getUserExpBypage(Integer page, Integer limit) {
+    public PageDto<UserExp> getUserExpBySearchDto(SearchDto searchDto) {
         PageDto<UserExp> userExpPageDto = new PageDto<>(PageUrlEnum.USER_URL.getUrl());
 
-        long total = userMapper.countByExample(new UserExample());
+        UserExample example = new UserExample();
+        if (searchDto.getKeyword() != null && !"null".equals(searchDto.getKeyword())) {
+            example.createCriteria().andNameLike("%" + searchDto.getKeyword() + "%");
+        }
 
-        userExpPageDto.countTotalPage((int) total, limit);
-        userExpPageDto.countPreAndAfter(page);
+        searchDto.setTotal((int) userMapper.countByExample(example));
+        userExpPageDto.init(searchDto);
+        searchDto.setOffset((userExpPageDto.getPage() - 1) * searchDto.getLimit());
 
-        int offset = (userExpPageDto.getPage() - 1) * limit;
-        List<User> users = userMapper.selectByExampleWithRowbounds(new UserExample(), new RowBounds(offset, limit));
+        List<User> users = userMapper.selectByExampleWithRowbounds(example, new RowBounds(searchDto.getOffset(), searchDto.getLimit()));
 
         List<UserExp> userExps = new ArrayList<>();
         for (User user : users) {

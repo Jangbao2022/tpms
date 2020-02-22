@@ -1,13 +1,11 @@
 package com.itcast.tpms.service.majorService.impl;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
 import com.itcast.tpms.mapper.CourseMapper;
 import com.itcast.tpms.mapper.MajorMapper;
-import com.itcast.tpms.model.Course;
-import com.itcast.tpms.model.CourseExample;
-import com.itcast.tpms.model.Major;
-import com.itcast.tpms.model.MajorExample;
+import com.itcast.tpms.model.*;
 import com.itcast.tpms.service.majorService.IMajorService;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +21,19 @@ public class MajorServiceImpl implements IMajorService {
     private MajorMapper majorMapper;
 
     @Override
-    public PageDto<Major> getMajorByPage(Integer page, Integer limit) {
+    public PageDto<Major> getMajorBySearchDto(SearchDto searchDto) {
         PageDto<Major> majorPageDto = new PageDto<>(PageUrlEnum.MAJOR_URL.getUrl());
-        long total = majorMapper.countByExample(new MajorExample());
 
-        majorPageDto.countTotalPage((int) total, limit);
-        majorPageDto.countPreAndAfter(page);
+        MajorExample example = new MajorExample();
+        if (searchDto.getKeyword() != null && !"null".equals(searchDto.getKeyword())) {
+            example.createCriteria().andNameLike("%" + searchDto.getKeyword() + "%");
+        }
 
-        int offset = (majorPageDto.getPage() - 1) * limit;
-        List<Major> majors = majorMapper.selectByExampleWithRowbounds(new MajorExample(), new RowBounds(offset, limit));
+        searchDto.setTotal((int) majorMapper.countByExample(example));
+        majorPageDto.init(searchDto);
+        searchDto.setOffset((majorPageDto.getPage() - 1) * searchDto.getLimit());
+
+        List<Major> majors = majorMapper.selectByExampleWithRowbounds(example, new RowBounds(searchDto.getOffset(), searchDto.getLimit()));
 
         majorPageDto.setElements(majors);
 

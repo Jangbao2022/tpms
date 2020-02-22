@@ -7,7 +7,7 @@
 <body class="fix-header fix-sidebar card-no-border">
 <div th:replace="fragment::preloader"></div>
 <div id="main-wrapper">
-    <header th:replace="fragment::topbar"></header>
+    <header th:replace="fragment::topbar('/major/getMajorByPage','按专业名搜索(按下回车即可)')"></header>
     <aside th:replace="fragment::left-sidebar"></aside>
     <div class="page-wrapper">
         <div class="container-fluid">

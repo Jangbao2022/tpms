@@ -7,7 +7,7 @@ public enum PageUrlEnum {
     MAJOR_URL("/major/getMajorByPage", "专业页面分页URL"),
     CURRICULUM_URL("/curriculum/getCurriculumByPage", "方案课程页面分页URL"),
 
-    CURRICULUM_SEARCH_URL("/search", "search方案课程页面分页URL"),
+//    CURRICULUM_SEARCH_URL("/search/curriculum", "search方案课程页面分页URL"),
 
 
     ;

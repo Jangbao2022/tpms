@@ -1,6 +1,7 @@
 package com.itcast.tpms.controller;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageLimitEnum;
 import com.itcast.tpms.exp.CurriculumExp;
 import com.itcast.tpms.model.Course;
@@ -36,11 +37,9 @@ public class CurriculumController {
     private ICurrmidUtil currmidUtil;
 
     @RequestMapping("getCurriculumByPage")
-    public String getCurriculumByPage(Integer page, Model model) {
-        if (page == null || page < 0) {
-            page = 0;
-        }
-        PageDto<CurriculumExp> currExpPageDto = curriculumService.getCurriculumByPage(page, PageLimitEnum.CURRICULUM_LIMIT.getLimit());
+    public String getCurriculumByPage(SearchDto searchDto, Model model) {
+        searchDto.setLimit(PageLimitEnum.CURRICULUM_LIMIT.getLimit());
+        PageDto<CurriculumExp> currExpPageDto = curriculumService.getCurriculumBySearchDto(searchDto);
         model.addAttribute("pageDto", currExpPageDto);
         return "index";
     }

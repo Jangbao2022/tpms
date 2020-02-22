@@ -1,6 +1,7 @@
 package com.itcast.tpms.service.userservice;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.exp.UserExp;
 import com.itcast.tpms.model.User;
 
@@ -10,7 +11,7 @@ import com.itcast.tpms.model.User;
  */
 public interface IUserService {
 
-    PageDto<UserExp> getUserExpBypage(Integer page, Integer limit);
+    PageDto<UserExp> getUserExpBySearchDto(SearchDto searchDto);
 
     User getUserById(Long userId);
 

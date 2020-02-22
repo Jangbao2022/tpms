@@ -1,6 +1,7 @@
 package com.itcast.tpms.service.courseservice.impl;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
 import com.itcast.tpms.mapper.CourseMapper;
 import com.itcast.tpms.model.Course;
@@ -25,16 +26,20 @@ public class CourseServiceImpl implements ICourseService {
     private CurrmidUtil currmidUtil;
 
     @Override
-    public PageDto<Course> getCourseByPage(Integer page, Integer limit) {
+    public PageDto<Course> getCourseBySearchDto(SearchDto searchDto) {
 
         PageDto<Course> coursePageDto = new PageDto<>(PageUrlEnum.COURSE_URL.getUrl());
-        long total = courseMapper.countByExample(new CourseExample());
+        CourseExample example = new CourseExample();
 
-        coursePageDto.countTotalPage((int) total, limit);
-        coursePageDto.countPreAndAfter(page);
+        if (searchDto.getKeyword() != null && !"null".equals(searchDto.getKeyword())) {
+            example.createCriteria().andNameLike("%" + searchDto.getKeyword() + "%");
+        }
 
-        int offset = (coursePageDto.getPage() - 1) * limit;
-        List<Course> courses = courseMapper.selectByExampleWithRowbounds(new CourseExample(), new RowBounds(offset, limit));
+        searchDto.setTotal((int) courseMapper.countByExample(example));
+        coursePageDto.init(searchDto);
+        searchDto.setOffset((coursePageDto.getPage() - 1) * searchDto.getLimit());
+
+        List<Course> courses = courseMapper.selectByExampleWithRowbounds(example, new RowBounds(searchDto.getOffset(), searchDto.getLimit()));
         Collections.sort(courses, (c1, c2) ->
                 c2.getCredit().compareTo(c1.getCredit())
         );

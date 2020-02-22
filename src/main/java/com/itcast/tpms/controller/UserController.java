@@ -1,6 +1,7 @@
 package com.itcast.tpms.controller;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageLimitEnum;
 import com.itcast.tpms.exp.UserExp;
 import com.itcast.tpms.model.Major;
@@ -36,12 +37,11 @@ public class UserController {
         return "index";
     }
 
-    @RequestMapping("getUerByPage")
-    public String getUerByPage(Integer page, Model model) {
-        if (page == null || page < 0) {
-            page = 0;
-        }
-        PageDto<UserExp> userExpPageDto = userService.getUserExpBypage(page, PageLimitEnum.USER_LIMIT.getLimit());
+    @RequestMapping("getUserByPage")
+    public String getUerByPage(SearchDto searchDto, Model model) {
+
+        searchDto.setLimit(PageLimitEnum.USER_LIMIT.getLimit());
+        PageDto<UserExp> userExpPageDto = userService.getUserExpBySearchDto(searchDto);
         model.addAttribute("pageDto", userExpPageDto);
         return "users";
     }

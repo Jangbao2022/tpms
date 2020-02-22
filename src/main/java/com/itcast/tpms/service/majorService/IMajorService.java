@@ -1,6 +1,7 @@
 package com.itcast.tpms.service.majorService;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.model.Major;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface IMajorService {
 
-    PageDto<Major> getMajorByPage(Integer page, Integer limit);
+    PageDto<Major> getMajorBySearchDto(SearchDto searchDto);
 
     List<Major> getAllMajor();
 

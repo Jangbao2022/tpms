@@ -1,6 +1,7 @@
 package com.itcast.tpms.controller;
 
 import com.itcast.tpms.exp.CurriculumExp;
+import com.itcast.tpms.exp.UserExp;
 import com.itcast.tpms.model.Course;
 import com.itcast.tpms.service.curriculumSerivce.ICurriculumService;
 import com.itcast.tpms.utils.FileUtil;
@@ -28,7 +29,7 @@ public class DownLoadController {
      */
     @RequestMapping("/download")
     @ResponseBody
-    public void downLoad(Long curriculumId, HttpServletResponse response) {
+    public void downLoad(Long curriculumId, HttpServletRequest request, HttpServletResponse response) {
 
         CurriculumExp curriculumExp = curriculumService.getCurriculumById(curriculumId);
         String longString = curriculumExp.getMajor().getName() + "\t\t" + curriculumExp.getCurr().getName() + "\n";
@@ -41,23 +42,27 @@ public class DownLoadController {
             longString += courses.get(i).getClassHour() + "\n";
         }
 
-        longString += "需要必修学时\t\t" + curriculumExp.getCurr().getNeedObligatoryClassHour() + "\t\t";
-        longString += "完成必修学时\t\t" + curriculumExp.getStudy().getTotalObligatoryClassHour() + "\t\t";
-        longString += "未完成必修学时\t\t" + curriculumExp.getStudy().getLackObligatoryClassHour() + "\n";
+
+        UserExp userExp = (UserExp) request.getSession().getAttribute("userExp");
+        //普通老师不能有
+        if (userExp.getUser().getPower() != 2) {
+            longString += "需要必修学时\t\t" + curriculumExp.getCurr().getNeedObligatoryClassHour() + "\t\t";
+            longString += "完成必修学时\t\t" + curriculumExp.getStudy().getTotalObligatoryClassHour() + "\t\t";
+            longString += "未完成必修学时\t\t" + curriculumExp.getStudy().getLackObligatoryClassHour() + "\n";
 
 
-        longString += "需要选修学时\t\t" + curriculumExp.getCurr().getNeedElectiveClassHour() + "\t\t";
-        longString += "完成选修学时\t\t" + curriculumExp.getStudy().getLackElectiveClassHour() + "\t\t";
-        longString += "未完成选修学时\t\t" + curriculumExp.getStudy().getLackElectiveClassHour() + "\n";
+            longString += "需要选修学时\t\t" + curriculumExp.getCurr().getNeedElectiveClassHour() + "\t\t";
+            longString += "完成选修学时\t\t" + curriculumExp.getStudy().getLackElectiveClassHour() + "\t\t";
+            longString += "未完成选修学时\t\t" + curriculumExp.getStudy().getLackElectiveClassHour() + "\n";
 
-        longString += "需要必修学分\t\t" + curriculumExp.getCurr().getNeedObligatoryCredit() + "\t\t";
-        longString += "完成必修学分\t\t" + curriculumExp.getStudy().getTotalObligatoryCredit() + "\t\t";
-        longString += "未完成必修学分\t\t" + curriculumExp.getStudy().getLackObligatoryCredit() + "\n";
+            longString += "需要必修学分\t\t" + curriculumExp.getCurr().getNeedObligatoryCredit() + "\t\t";
+            longString += "完成必修学分\t\t" + curriculumExp.getStudy().getTotalObligatoryCredit() + "\t\t";
+            longString += "未完成必修学分\t\t" + curriculumExp.getStudy().getLackObligatoryCredit() + "\n";
 
-        longString += "需要选修学分\t\t" + curriculumExp.getCurr().getNeedElectiveCredit() + "\t\t";
-        longString += "完成选修学分\t\t" + curriculumExp.getStudy().getTotalElectiveCredit() + "\t\t";
-        longString += "未完成选修学分\t\t" + curriculumExp.getStudy().getLackElectiveCredit() + "\n";
-
+            longString += "需要选修学分\t\t" + curriculumExp.getCurr().getNeedElectiveCredit() + "\t\t";
+            longString += "完成选修学分\t\t" + curriculumExp.getStudy().getTotalElectiveCredit() + "\t\t";
+            longString += "未完成选修学分\t\t" + curriculumExp.getStudy().getLackElectiveCredit() + "\n";
+        }
         try {
             File file = new File("./target/classes/doc/" + curriculumExp.getCurr().getName() + ".txt");
             FileWriter fileWriter = new FileWriter(file);

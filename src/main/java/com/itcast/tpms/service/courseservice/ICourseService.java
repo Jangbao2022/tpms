@@ -1,6 +1,7 @@
 package com.itcast.tpms.service.courseservice;
 
 import com.itcast.tpms.dto.PageDto;
+import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.model.Course;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  */
 public interface ICourseService {
 
-    PageDto<Course> getCourseByPage(Integer page, Integer limit);
+    PageDto<Course> getCourseBySearchDto(SearchDto searchDto);
 
     Course getCourseById(Long courseId);
 

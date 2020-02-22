@@ -50,7 +50,7 @@
 </div>
 
 <!--顶部栏-->
-<header class="topbar" th:fragment="topbar">
+<header class="topbar" th:fragment="topbar(action,placeholder)">
     <nav class="navbar top-navbar navbar-expand-md navbar-light">
         <div class="navbar-header">
             <a class="navbar-brand" href="/index">
@@ -67,8 +67,8 @@
                 <li class="nav-item hidden-xs-down search-box"><a
                         class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i
                         class="fa fa-search"></i></a>
-                    <form class="app-search" action="/search">
-                        <input type="text" name="keyword" class="form-control" placeholder="搜索培养方案(输入名字或年级按下回车)">
+                    <form class="app-search" th:action="${action}">
+                        <input type="text" name="keyword" class="form-control" th:placeholder="${placeholder}">
                         <a class="srh-btn"><i class="fa fa-times"></i>
                         </a>
                     </form>
@@ -103,11 +103,12 @@
                 <li><a class="waves-effect waves-dark" href="/course/getCourseByPage" aria-expanded="false"><i
                         class="fa fa-table"></i><span class="hide-menu">课程信息</span></a>
                 </li>
-                <li><a class="waves-effect waves-dark" href="/major/getMajorByPage" aria-expanded="false"><i
-                        class="fa fa-smile-o"></i><span class="hide-menu">专业管理</span></a>
+                <li th:if="!${session.userExp.user.power<=2}">
+                    <a class="waves-effect waves-dark" href="/major/getMajorByPage" aria-expanded="false"><i
+                            class="fa fa-smile-o"></i><span class="hide-menu">专业管理</span></a>
                 </li>
                 <li><a th:if="!${session.userExp.user.power<5}" class="waves-effect waves-dark"
-                       href="/user/getUerByPage" aria-expanded="false">
+                       href="/user/getUserByPage" aria-expanded="false">
                     <i class="fa fa-globe"></i><span class="hide-menu">用户管理</span></a>
                 </li>
             </ul>
