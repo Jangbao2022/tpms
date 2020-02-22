@@ -8,6 +8,7 @@ import com.itcast.tpms.model.Major;
 import com.itcast.tpms.model.User;
 import com.itcast.tpms.model.UserExample;
 import com.itcast.tpms.service.loginservice.ILoginService;
+import com.itcast.tpms.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +29,16 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public User checkUser(User user) {
         UserExample example = new UserExample();
+        user.setPassword(PasswordUtil.encryptBASE64(user.getPassword().getBytes()));
         example.createCriteria()
                 .andAccountEqualTo(user.getAccount())
                 .andPasswordEqualTo(user.getPassword());
         List<User> users = userMapper.selectByExample(example);
         if (users.size() == 1) {
-            return users.get(0);
+            User checkedUser = users.get(0);
+            byte[] bytes = PasswordUtil.decryptBASE64(checkedUser.getPassword());
+            checkedUser.setPassword(new String(bytes));
+            return checkedUser;
         }
         return null;
     }

@@ -11,6 +11,7 @@ import com.itcast.tpms.model.MajorExample;
 import com.itcast.tpms.model.User;
 import com.itcast.tpms.model.UserExample;
 import com.itcast.tpms.service.userservice.IUserService;
+import com.itcast.tpms.utils.PasswordUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,10 @@ public class UserServiceImpl implements IUserService {
         for (User user : users) {
             UserExp userExp = new UserExp();
             userExp.setTitle(UserPowerEnum.getDescribe(user.getPower()));
+            byte[] bytes = PasswordUtil.decryptBASE64(user.getPassword());
+            user.setPassword(new String(bytes));
+            //设置密码不可见
+            user.setPassword(user.getPassword().replaceAll(".", "*"));
             userExp.setUser(user);
 
             userExps.add(userExp);
@@ -64,7 +69,7 @@ public class UserServiceImpl implements IUserService {
     public boolean addUser(User user) {
         user.setGmtCreated(new Date());
         user.setGmtModified(user.getGmtCreated());
-
+        user.setPassword(PasswordUtil.encryptBASE64(user.getPassword().getBytes()));
         int insert = userMapper.insert(user);
         return insert == 1;
     }
@@ -72,7 +77,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean updateUser(User preUser, User user) {
         preUser.setAccount(user.getAccount());
-        preUser.setPassword(user.getPassword());
+        preUser.setPassword(PasswordUtil.encryptBASE64(user.getPassword().getBytes()));
 
         return updateUser(preUser);
     }

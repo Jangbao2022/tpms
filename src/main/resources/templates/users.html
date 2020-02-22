@@ -37,6 +37,7 @@
                                         <th>#</th>
                                         <th>用户名</th>
                                         <th>账号</th>
+                                        <th>密码</th>
                                         <th>类型</th>
                                         <th rowspan="2" style="text-align: center;">操作</th>
                                     </tr>
@@ -46,6 +47,7 @@
                                         <td th:text="${userStat.index+1}">1</td>
                                         <td th:text="${userExp.user.name}">@Genelia</td>
                                         <td th:text="${userExp.user.account}">@Genelia</td>
+                                        <td th:text="${userExp.user.password}">@Genelia</td>
                                         <td th:text="${userExp.title}">@Genelia</td>
                                         <td><a th:href="@{/user/updateUserPageById(userId=${userExp.user.id})}">修改</a>
                                         </td>
