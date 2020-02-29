@@ -35,10 +35,13 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>课程名</th>
-                                        <th>选/必</th>
+                                        <th>课程中文名</th>
+                                        <th>课程英文文名</th>
+                                        <!--<th>选/必</th>-->
                                         <th>学分</th>
-                                        <th>学时</th>
+                                        <th>课程性质</th>
+                                        <th>考核方式</th>
+                                        <th>总学时</th>
                                         <div th:if="!${session.userExp.user.power<=2}">
                                             <th rowspan="2" style="text-align: center;">操作</th>
                                         </div>
@@ -48,8 +51,13 @@
                                     <tr th:each="course,courseStat:${pageDto.elements}">
                                         <td th:text="${courseStat.index+1}">1</td>
                                         <td th:text="${course.name}">@Genelia</td>
-                                        <td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>
+                                        <td th:text="${course.englishName}">@Genelia</td>
+                                        <!--<td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>-->
                                         <td th:text="${course.credit}">Prohaska</td>
+
+                                        <td th:text="${course.courseQuality}">@Genelia</td>
+                                        <td th:text="${course.assessmentMethod==1?'考试':'考查'}">@Genelia</td>
+
                                         <td th:text="${course.classHour}">@Genelia</td>
                                         <div th:if="!${session.userExp.user.power<=2}">
                                             <td>

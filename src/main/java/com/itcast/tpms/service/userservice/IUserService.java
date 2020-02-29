@@ -38,4 +38,5 @@ public interface IUserService {
 
     boolean deleteUserById(Long userId);
 
+    boolean checkAccount(User user);
 }

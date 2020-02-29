@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Module</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar('/module/getModuleByPage','按课程名搜索(按下回车即可)')"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor" th:text="${moduleExp==null}?'添加':'更新'+'模块'">更新/添加课程</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active" th:text="${moduleExp==null}?'添加':'更新'+'模块'">更新/添加课程</li>
+                    </ol>
+                </div>
+                <div th:replace=" fragment::logon">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="" method="post" action="/module/addOrUpdateModule">
+                                <input th:if="${moduleExp!=null}" hidden="hidden" name="id"
+                                       th:value="${moduleExp!=null?moduleExp.module.id:''}">
+                                <div class="form-group">
+                                    <label class="col-md-12">模块名</label>
+                                    <div class="col-md-12">
+                                        <input type="text" required="required" name="name"
+                                               th:value="${moduleExp!=null?moduleExp.module.name:''}"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-12">模块级别</label>
+                                    <div class="col-md-12">
+                                        <input type="text" id="rank" required="required" name="rank"
+                                               th:value="${moduleExp!=null?moduleExp.module.rank:''}"
+                                               onchange="change(this)"
+                                               class="form-control form-control-line">
+                                    </div>
+                                </div>
+                                <script>
+
+                                    function change(ele) {
+                                        var value = ele.value
+                                        if (value == 1) {
+                                            document.getElementById('dis').setAttribute("style", "display:none");
+                                        } else {
+                                            document.getElementById('dis').setAttribute("style", "");
+                                        }
+                                    }
+
+                                    window.onload = function () {
+                                        var rank = document.getElementById('rank');
+                                        change(rank);
+                                    }
+                                </script>
+                                <div id="dis">
+                                    <div class="form-group">
+                                        <label class="col-md-12">上级模块</label>
+                                        <div class="col-md-12">
+                                            <div style="width: 20%; float: left;"
+                                                 th:each="oneLevelModule:${allOneLevelModule}">
+                                                <input th:if="${moduleExp!=null&&oneLevelModule.id!=moduleExp.module.id}"
+                                                       type="radio" name="preLevelId" placeholder="一级模块不填"
+                                                       th:value="${oneLevelModule.id}" th:text="${oneLevelModule.name}"
+                                                       th:checked="${moduleExp!=null&&moduleExp.module.preLevelId==oneLevelModule.id}">
+                                            </div>
+                                            <input type="radio" name="preLevelId" placeholder="一级模块不填"
+                                                   value="" th:text="空选">
+                                        </div>
+                                    </div>
+                                    <div class=" form-group">
+                                        <label class="col-md-12" style="margin-top: 20px">课程
+                                            <a onclick="checked(1)"
+                                               style="margin-left: 30px;font-size: 1px;background: white;"
+                                               class="btn btn-success">全选</a>
+                                            <a onclick="checked(2)"
+                                               style="margin-left: 30px;font-size: 1px;background: white;"
+                                               class="btn btn-success">全不选</a></label>
+                                        <div class="col-md-12">
+                                            <div style="width: 20%; float: left;" th:each="course:${courses}">
+                                                <div th:if="${moduleExp!=null&&moduleExp.courseIds.contains(course.id)}">
+                                                    <input type="checkbox" name="courseId"
+                                                           th:value="${course.id}" checked="checked">
+                                                    <span style="color: #20aee3;"
+                                                          th:onclick="|openWindow(${course.id})|"
+                                                          th:text="${course.name}"></span>
+                                                </div>
+                                                <div th:if="!${moduleExp!=null&&moduleExp.courseIds.contains(course.id)}">
+                                                    <input type="checkbox" name="courseId"
+                                                           th:value="${course.id}">
+                                                    <span style="color: #20aee3;"
+                                                          th:onclick="|openWindow(${course.id})|"
+                                                          th:text="${course.name}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        function openWindow(courseId) {
+                                            window.open('/course/getCourseById?courseId=' + courseId);
+                                        }
+
+                                        function checked(type) {
+                                            var elementsByName = document.getElementsByName('courseId');
+                                            for (var index in elementsByName) {
+                                                if (type == 1) {
+                                                    elementsByName[index].setAttribute("checked", "checked");
+                                                } else {
+                                                    elementsByName[index].removeAttribute("checked");
+                                                }
+                                            }
+                                        }
+
+
+                                    </script>
+                                </div>
+                                <div class="form-group" style="margin-top: 5%">
+                                    <div class="col-sm-12">
+                                        <input type="submit" value="提交" class="btn btn-success">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"> © 2018 Adminwrap by wrappixe</footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+</body>
+
+</html>

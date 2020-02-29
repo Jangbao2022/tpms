@@ -25,4 +25,8 @@ public interface ICourseService {
 
     boolean addOrUpdateCourse(Course course);
 
+    boolean updateCourseByIds(Long moduleId, String courseIds[]);
+
+    boolean deleteCourseAtModule(Long courseId);
+
 }

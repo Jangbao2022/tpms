@@ -19,6 +19,8 @@ public class CurriculumExp {
     //普通课程方案
     private Curriculum curr;
 
+    private OneLevelList oneLevelList;
+
     //专业
     private Major major;
 

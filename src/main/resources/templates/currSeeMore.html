@@ -37,69 +37,145 @@
                                class="btn waves-effect waves-light btn btn-primary pull-right hidden-sm-down"
                                style="margin-right: 5%; margin-bottom: 2%;">下载方案</a>
                             <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
+                                <table class="table" border="1px solid #ccc"
+                                       style="text-align: center; border-collapse: collapse;">
+                                    <div th:each="oneLevel, oneLevelStat: ${oneLevelList.oneLevels}">
+                                        <thead>
+                                        <tr align="center">
+                                            <td colspan="2" rowspan="2">模块</td>
+                                            <td rowspan="2">课程中文名称</td>
+                                            <td rowspan="2">课程英文名称</td>
+                                            <td rowspan="2">学分</td>
+                                            <td rowspan="2">课程性质</td>
+                                            <td rowspan="2">考核方式</td>
+                                            <td rowspan="2">学时</td>
+
+                                            <td colspan="4" align="center">学时分配</td>
+                                            <td rowspan="2">执行学期</td>
+
+                                            <!--<th th:if="!${session.userExp.user.power<=4}">操作</th>-->
+                                        </tr>
+                                        <tr>
+                                            <td>讲授</td>
+                                            <td>实验</td>
+                                            <td>实习</td>
+                                            <td>上机</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <div th:each="twoLevel,twoLevelStat:${oneLevel.twoLevels}">
+                                            <div th:each="courExp,courExpStat:${twoLevel.courseExps}">
+                                                <tr align="center">
+                                                    <td th:if="${twoLevelStat.index==0&&courExpStat.index==0}"
+                                                        th:rowspan="${oneLevel.totalCourse}"
+                                                        th:text="${oneLevel.moduleName}">一级模块名
+                                                    </td>
+                                                    <td th:if="${courExpStat.index==0}"
+                                                        th:rowspan="${twoLevel.totalCourse}"
+                                                        th:text="${twoLevel.moduleName}">二级模块名
+                                                    </td>
+
+                                                    <td th:text="${courExp.course.name}">课程中文名称</td>
+                                                    <td th:text="${courExp.course.englishName}">课程英文名称</td>
+                                                    <td th:text="${courExp.course.credit}">学分</td>
+                                                    <td th:text="${courExp.course.courseQuality}">课程性质</td>
+                                                    <td th:text="${courExp.course.assessmentMethod}">考核方式</td>
+                                                    <td th:text="${courExp.course.classHour}">学时</td>
+
+                                                    <td th:text="${courExp.teach}">讲授</td>
+                                                    <td th:text="${courExp.experiment}">实验</td>
+                                                    <td th:text="${courExp.practice}">实习</td>
+                                                    <td th:text="${courExp.oac}">上机</td>
+                                                    <td th:text="${courExp.semester}">执行学期</td>
+                                                    <!--<th th:if="!${session.userExp.user.power<=4}">操作</th>-->
+                                                </tr>
+                                            </div>
+                                            <tr>
+                                                <td colspan="2">
+                                                    小计
+                                                </td>
+                                                <td th:text="${twoLevel.totalCredit}">
+                                                    小计
+                                                </td>
+                                                <td colspan="8">
+
+                                                </td>
+                                            </tr>
+                                        </div>
+                                        <tr>
+                                            <td colspan="3">
+                                                [[${oneLevel.moduleName}]]合计
+                                            </td>
+                                            <td th:text="${oneLevel.totalCredit}">
+                                                一级总计
+                                            </td>
+                                            <td colspan="8">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </div>
                                     <tr>
-                                        <th>#</th>
-                                        <th>课程名</th>
-                                        <th>选/必</th>
-                                        <th>学分</th>
-                                        <th>学时</th>
-                                        <th th:if="!${session.userExp.user.power<=4}">操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="course,courseStat:${currExp.courses}">
-                                        <td th:text="${courseStat.index+1}">1</td>
-                                        <td th:text="${course.name}">@Genelia</td>
-                                        <td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>
-                                        <td th:text="${course.credit}">Prohaska</td>
-                                        <td th:text="${course.classHour}">@Genelia</td>
-                                        <td th:if="!${session.userExp.user.power<=4}">
-                                            <a th:href=" @{/curriculum/deleteCourseAtCurr(courseId=${course.id},curriculumId=${currExp.curr.id})}">删除</a>
+                                        <td colspan="4">
+                                            学分总计
+                                        </td>
+                                        <td th:text="${oneLevelList.totalCredit}">
+                                            一级总计
+                                        </td>
+                                        <td colspan="8">
                                         </td>
                                     </tr>
-                                    </tbody>
+                                    <!--<tbody>-->
+                                    <!--<tr th:each="course,courseStat:${currExp.courses}">-->
+                                    <!--<td th:text="${courseStat.index+1}">1</td>-->
+                                    <!--<td th:text="${course.name}">@Genelia</td>-->
+                                    <!--<td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>-->
+                                    <!--<td th:text="${course.credit}">Prohaska</td>-->
+                                    <!--<td th:text="${course.classHour}">@Genelia</td>-->
+                                    <!--<td th:if="!${session.userExp.user.power<=4}">-->
+                                    <!--<a th:href=" @{/curriculum/deleteCourseAtCurr(courseId=${course.id},curriculumId=${currExp.curr.id})}">删除</a>-->
+                                    <!--</td>-->
+                                    <!--</tr>-->
+                                    <!--</tbody>-->
                                 </table>
 
-                                <div th:if="${session.userExp.user.power!=2}">
-                                    <h5 class="card-title" style="float: left;margin-top: 16px;margin-bottom: 21px">
-                                        完成情况</h5>
-                                    <table class="table">
-                                        <tr>
-                                            <td>需要必修学时</td>
-                                            <td th:text="${currExp.curr.needObligatoryClassHour}">num</td>
-                                            <td>完成必修学时</td>
-                                            <td th:text="${currExp.study.totalObligatoryClassHour}">num</td>
-                                            <td>未完成必修学时</td>
-                                            <td th:text="${currExp.study.lackObligatoryClassHour}">num</td>
-                                        </tr>
-                                        <tr>
-                                            <td>需要选修学时</td>
-                                            <td th:text="${currExp.curr.needElectiveClassHour}">num</td>
-                                            <td>完成选修学时</td>
-                                            <td th:text="${currExp.study.totalElectiveClassHour}">num</td>
-                                            <td>未完成选修学时</td>
-                                            <td th:text="${currExp.study.lackElectiveClassHour}">num</td>
-                                        </tr>
-                                        <tr>
-                                            <td>需要必修学分</td>
-                                            <td th:text="${currExp.curr.needObligatoryCredit}">num</td>
-                                            <td>完成必修学分</td>
-                                            <td th:text="${currExp.study.totalObligatoryCredit}">num</td>
-                                            <td>未完成必修学分</td>
-                                            <td th:text="${currExp.study.lackObligatoryCredit}">num</td>
-                                        </tr>
-                                        <tr>
-                                            <td>需要选修学分</td>
-                                            <td th:text="${currExp.curr.needElectiveCredit}">num</td>
-                                            <td>完成选修学分</td>
-                                            <td th:text="${currExp.study.totalElectiveCredit}">num</td>
-                                            <td>未完成选修学分</td>
-                                            <td th:text="${currExp.study.lackElectiveCredit}">num</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                <!--<div th:if="${session.userExp.user.power!=2}">-->
+                                <!--<h5 class="card-title" style="float: left;margin-top: 16px;margin-bottom: 21px">-->
+                                <!--完成情况</h5>-->
+                                <!--<table class="table">-->
+                                <!--<tr>-->
+                                <!--<td>需要必修学时</td>-->
+                                <!--<td th:text="${currExp.curr.needObligatoryClassHour}">num</td>-->
+                                <!--<td>完成必修学时</td>-->
+                                <!--<td th:text="${currExp.study.totalObligatoryClassHour}">num</td>-->
+                                <!--<td>未完成必修学时</td>-->
+                                <!--<td th:text="${currExp.study.lackObligatoryClassHour}">num</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td>需要选修学时</td>-->
+                                <!--<td th:text="${currExp.curr.needElectiveClassHour}">num</td>-->
+                                <!--<td>完成选修学时</td>-->
+                                <!--<td th:text="${currExp.study.totalElectiveClassHour}">num</td>-->
+                                <!--<td>未完成选修学时</td>-->
+                                <!--<td th:text="${currExp.study.lackElectiveClassHour}">num</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td>需要必修学分</td>-->
+                                <!--<td th:text="${currExp.curr.needObligatoryCredit}">num</td>-->
+                                <!--<td>完成必修学分</td>-->
+                                <!--<td th:text="${currExp.study.totalObligatoryCredit}">num</td>-->
+                                <!--<td>未完成必修学分</td>-->
+                                <!--<td th:text="${currExp.study.lackObligatoryCredit}">num</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td>需要选修学分</td>-->
+                                <!--<td th:text="${currExp.curr.needElectiveCredit}">num</td>-->
+                                <!--<td>完成选修学分</td>-->
+                                <!--<td th:text="${currExp.study.totalElectiveCredit}">num</td>-->
+                                <!--<td>未完成选修学分</td>-->
+                                <!--<td th:text="${currExp.study.lackElectiveCredit}">num</td>-->
+                                <!--</tr>-->
+                                <!--</table>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::headImport"></head>
+
+<title>TPMS - Curriculum</title>
+
+<body class="fix-header fix-sidebar card-no-border">
+<div th:replace="fragment::preloader"></div>
+<div id="main-wrapper">
+    <header th:replace="fragment::topbar('/course/getCourseByPage','按课程名搜索(按下回车即可)')"></header>
+    <aside th:replace="fragment::left-sidebar"></aside>
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">课程信息</h3>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">主页</a></li>
+                        <li class="breadcrumb-item active">课程信息</li>
+                    </ol>
+                </div>
+                <div th:replace="fragment::logon"></div>
+            </div>
+            <div class="row">
+                <!-- column -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="float: left;">课程信息</h4>
+                            <h4 class="card-title" style="float: left; margin-left: 15%">方案名:[[${curriculumName}]]</h4>
+                            <h4 class="card-title" style="float: left; margin-left: 15%">课程名:[[${courseName}]]</h4>
+                            <h4 class="card-title" style="float: left; margin-left: 15%">总学时:[[${classHour}]]</h4>
+                            <div class="table-responsive">
+                                <form class="" method="post" action="/curriculum/updateCurrMidCourse">
+                                    <input hidden="hidden" name="type" id="type">
+                                    <input hidden="hidden" name="curriculumId"
+                                           th:value="${curriculumMidCourse.curriculumId}">
+                                    <input hidden="hidden" name="courseId"
+                                           th:value="${curriculumMidCourse.courseId}">
+                                    <div class="form-group">
+                                        <label class="col-md-12">讲授学时</label>
+                                        <div class="col-md-12">
+                                            <input type="number" name="teach"
+                                                   th:value="${curriculumMidCourse.teach}"
+                                                   class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">实验学时</label>
+                                        <div class="col-md-12">
+                                            <input type="number" name="experiment"
+                                                   th:value="${curriculumMidCourse.experiment}"
+                                                   class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">实习学时</label>
+                                        <div class="col-md-12">
+                                            <input type="number" name="practice"
+                                                   th:value="${curriculumMidCourse.practice}"
+                                                   class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">上机学时</label>
+                                        <div class="col-md-12">
+                                            <input type="number" name="oac"
+                                                   th:value="${curriculumMidCourse.oac}"
+                                                   class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">执行学期</label>
+                                        <div class="col-md-12">
+                                            <input type="number" name="semester"
+                                                   th:value="${curriculumMidCourse.semester}"
+                                                   class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-top: 5%">
+                                        <div class="col-sm-12">
+                                            <input type="submit" value="提交" class="btn btn-success"
+                                                   onclick="preDefault(1)">
+                                            <input type="submit" value="草稿" class="btn btn-success"
+                                                   onclick="preDefault(2)">
+                                        </div>
+                                    </div>
+                                    <script>
+
+                                        function preDefault(type) {
+                                            var elementById = document.getElementById('type');
+                                            elementById.value = type;
+                                            return true;
+                                        }
+                                    </script>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="fragment::footer"></footer>
+    </div>
+</div>
+<script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
+<script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+<!-- slimscrollbar scrollbar JavaScript -->
+<script src="/js/perfect-scrollbar.jquery.min.js"></script>
+<!--Wave Effects -->
+<script src="/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/js/sidebarmenu.js"></script>
+<!--Custom JavaScript -->
+<script src="/js/custom.min.js"></script>
+<!-- jQuery peity -->
+<script src="/assets/node_modules/peity/jquery.peity.min.js"></script>
+<script src="/assets/node_modules/peity/jquery.peity.init.js"></script>
+</body>
+
+</html>

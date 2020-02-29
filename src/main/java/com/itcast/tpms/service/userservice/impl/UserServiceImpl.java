@@ -85,7 +85,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean updateUser(User user) {
         user.setGmtModified(new Date());
-        int i = userMapper.updateByPrimaryKey(user);
+        int i = userMapper.updateByPrimaryKeySelective(user);
         return i == 1;
     }
 
@@ -102,5 +102,12 @@ public class UserServiceImpl implements IUserService {
     public boolean deleteUserById(Long userId) {
         int delete = userMapper.deleteByPrimaryKey(userId);
         return delete == 1;
+    }
+
+    @Override
+    public boolean checkAccount(User user) {
+        UserExample example = new UserExample();
+        example.createCriteria().andAccountEqualTo(user.getAccount());
+        return userMapper.countByExample(example) <= 0;
     }
 }

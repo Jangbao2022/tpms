@@ -12,7 +12,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/tpms?serverTimezone=UTC&amp;characterEncoding=utf8&amp;useUnicode=true"
                         userId="root"
-                        password="pawn2589">
+                        password="12345678">
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -37,6 +37,7 @@
         <table tableName="curriculum" domainObjectName="Curriculum"></table>
         <table tableName="curriculum_mid_course" domainObjectName="CurriculumMidCourse"></table>
         <table tableName="major" domainObjectName="Major"></table>
+        <table tableName="module" domainObjectName="Module"></table>
 
     </context>
 </generatorConfiguration>

@@ -62,7 +62,7 @@ public class MajorServiceImpl implements IMajorService {
     @Override
     public boolean updateMajor(Major major) {
         major.setGmtModified(new Date());
-        int i = majorMapper.updateByPrimaryKey(major);
+        int i = majorMapper.updateByPrimaryKeySelective(major);
         return i == 1;
     }
 

@@ -39,8 +39,8 @@
                                         <th>对应专业</th>
                                         <th>年级</th>
                                         <th>类型</th>
-                                        <th>学分(必/选)</th>
-                                        <th>学时(必/选)</th>
+                                        <!--<th>学分(必/选)</th>-->
+                                        <!--<th>学时(必/选)</th>-->
                                         <th rowspan="2" style="text-align: center;">操作</th>
                                     </tr>
                                     </thead>
@@ -52,12 +52,6 @@
                                         <th th:text="${currExp.major.name}">物联网</th>
                                         <th th:text="${currExp.curr.grade}">2018</th>
                                         <th th:text="${currExp.curr.current==1?'当前':'历史'}">2018</th>
-                                        <th th:text="${currExp.curr.needObligatoryCredit}+'/'+${currExp.curr.needElectiveCredit}">
-                                            100
-                                        </th>
-                                        <th th:text="${currExp.curr.needObligatoryClassHour}+'/'+${currExp.curr.needElectiveClassHour}">
-                                            200
-                                        </th>
                                         <td>
                                             <a th:href=" @{/curriculum/seeMoreById(curriculumId=${currExp.curr.id})}">查看</a>
                                         </td>

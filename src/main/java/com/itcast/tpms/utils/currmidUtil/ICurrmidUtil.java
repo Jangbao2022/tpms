@@ -24,6 +24,13 @@ public interface ICurrmidUtil {
      */
     boolean canDeleteCourse(Long courseId);
 
+    /**
+     * 通过方案id和课程id以及type获取中间表
+     *
+     * @param currId
+     * @return
+     */
+    CurriculumMidCourse getCurrMidCourse(Long currId, Long courseId, Integer type);
 
 //    /**
 //     * 能不能删除培养方案
@@ -39,7 +46,7 @@ public interface ICurrmidUtil {
      *
      * @param currId
      */
-    void deleteCurr(Long currId);
+    void deleteCurr(Long currId, Integer type);
 
     /**
      * 增加培养方案
@@ -47,7 +54,7 @@ public interface ICurrmidUtil {
      * @param currId
      * @param courseIds
      */
-    void addCurr(Long currId, List<Long> courseIds);
+    void addCurr(Long currId, List<Long> courseIds, Integer type);
 
     /**
      * 增加培养方案
@@ -55,7 +62,7 @@ public interface ICurrmidUtil {
      * @param currId
      * @param courseIds
      */
-    void addCurr(Long currId, String[] courseIds);
+    void addCurr(Long currId, String[] courseIds, Integer type);
 
     /**
      * 删除培养方案中的课程
@@ -64,4 +71,13 @@ public interface ICurrmidUtil {
      * @return
      */
     boolean deleteCourseAtCurr(CurriculumMidCourse curriculumMidCourse);
+
+
+    /**
+     * 修改学时分配
+     *
+     * @param curriculumMidCourse
+     * @return
+     */
+    boolean addOrUpdateCurriculumMidCourse(CurriculumMidCourse curriculumMidCourse);
 }

@@ -70,7 +70,7 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public boolean updateCourse(Course course) {
         course.setGmtModified(new Date());
-        int i = courseMapper.updateByPrimaryKey(course);
+        int i = courseMapper.updateByPrimaryKeySelective(course);
         return i == 1;
     }
 
@@ -93,5 +93,26 @@ public class CourseServiceImpl implements ICourseService {
         } else {
             return updateCourse(course);
         }
+    }
+
+    @Override
+    public boolean deleteCourseAtModule(Long courseId) {
+        Course course = new Course();
+        course.setId(courseId);
+        course.setModuleId(1L);
+        updateCourse(course);
+        return true;
+    }
+
+    @Override
+    public boolean updateCourseByIds(Long moduleId, String courseIds[]) {
+        if (courseIds != null) {
+            for (String courseId : courseIds) {
+                Course courseById = getCourseById(Long.parseLong(courseId));
+                courseById.setModuleId(moduleId);
+                updateCourse(courseById);
+            }
+        }
+        return true;
     }
 }

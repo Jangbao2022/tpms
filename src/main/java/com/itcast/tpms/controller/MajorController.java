@@ -42,7 +42,7 @@ public class MajorController {
         return "IPMajorPage";
     }
 
-    @RequestMapping("addOrUpdatcurriculumIdeMajor")
+    @RequestMapping("addOrUpdateMajor")
     public String addOrUpdateMajor(Major major) {
         majorService.addOrUpdateMajor(major);
         return "redirect:/major/getMajorByPage";

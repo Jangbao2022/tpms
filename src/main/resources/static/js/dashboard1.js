@@ -6,12 +6,12 @@ File: js
 */
 
 //总共必修学分
-var totalObligatoryCredit = 10;
+var totalObligatoryCredit = 20;
 //缺少必修学分
 var lackObligatoryCredit = 0;
 
 //总共必修学时
-var totalObligatoryClassHour = 10;
+var totalObligatoryClassHour = 30;
 //缺少必修学分
 var lackObligatoryClassHour = 0;
 

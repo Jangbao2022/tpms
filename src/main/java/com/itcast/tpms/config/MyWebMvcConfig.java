@@ -29,6 +29,8 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
         excludePathPatterns.add("/page/login");
         excludePathPatterns.add("/login");
         excludePathPatterns.add("/logon");
+        excludePathPatterns.add("/registerPage");
+        excludePathPatterns.add("/register");
 
         //错误
         excludePathPatterns.add("/error");

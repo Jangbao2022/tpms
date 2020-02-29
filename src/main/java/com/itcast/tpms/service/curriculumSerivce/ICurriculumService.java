@@ -2,7 +2,9 @@ package com.itcast.tpms.service.curriculumSerivce;
 
 import com.itcast.tpms.dto.PageDto;
 import com.itcast.tpms.dto.SearchDto;
+import com.itcast.tpms.exp.CourseExpList;
 import com.itcast.tpms.exp.CurriculumExp;
+import com.itcast.tpms.exp.OneLevelList;
 import com.itcast.tpms.model.Course;
 import com.itcast.tpms.model.Curriculum;
 import com.itcast.tpms.model.User;
@@ -24,9 +26,9 @@ public interface ICurriculumService {
 
     boolean updateCurriculum(Curriculum curriculum);
 
-    boolean deleteCurriculum(Long curriculumId);
+    boolean deleteCurriculum(Long curriculumId, Integer type);
 
-    boolean addOrUpdateCurriculum(Curriculum curriculum);
+    boolean addOrUpdateCurriculum(Curriculum curriculum, Integer type);
 
     /**
      * 删除专业相关的课程方案
@@ -42,5 +44,7 @@ public interface ICurriculumService {
      * @return
      */
     Long getLastCurrId();
+
+    OneLevelList seeMore(CurriculumExp currExp);
 
 }
