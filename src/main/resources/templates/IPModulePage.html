@@ -68,6 +68,9 @@
                                         <div class="col-md-12">
                                             <div style="width: 20%; float: left;"
                                                  th:each="oneLevelModule:${allOneLevelModule}">
+                                                <input th:if="${moduleExp==null}"
+                                                       type="radio" name="preLevelId" placeholder="一级模块不填"
+                                                       th:value="${oneLevelModule.id}" th:text="${oneLevelModule.name}">
                                                 <input th:if="${moduleExp!=null&&oneLevelModule.id!=moduleExp.module.id}"
                                                        type="radio" name="preLevelId" placeholder="一级模块不填"
                                                        th:value="${oneLevelModule.id}" th:text="${oneLevelModule.name}"
