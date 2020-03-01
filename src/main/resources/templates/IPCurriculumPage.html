@@ -79,6 +79,12 @@
                                     <label class="col-md-12" style="margin-top: 20px">课程</label>
                                     <div class="col-md-12">
                                         <div style="width: 20%; float: left;" th:each="course:${courses}">
+                                            <div th:if="${curriculumExp==null}">
+                                                <input type="checkbox" name="courseId" th:id="${course.id}"
+                                                       th:value="${course.id}">
+                                                <span style="color: #20aee3;"
+                                                      th:text="${course.name}"></span>
+                                            </div>
                                             <div th:if="${curriculumExp!=null&&curriculumExp.courseIds.contains(course.id)}">
                                                 <input type="checkbox" name="courseId" th:id="${course.id}"
                                                        th:value="${course.id}" checked>
@@ -86,7 +92,7 @@
                                                       th:onclick="|openWindow(${course.id},${curriculumExp.curr.id})|"
                                                       th:text="${course.name}"></span>
                                             </div>
-                                            <div th:if="!${curriculumExp!=null&&curriculumExp.courseIds.contains(course.id)}">
+                                            <div th:if="${curriculumExp!=null&&!curriculumExp.courseIds.contains(course.id)}">
                                                 <input type="checkbox" name="courseId" th:id="${course.id}"
                                                        th:value="${course.id}">
                                                 <span style="color: #20aee3;"
