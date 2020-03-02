@@ -3,6 +3,7 @@ package com.itcast.tpms.controller;
 import com.itcast.tpms.dto.PageDto;
 import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageLimitEnum;
+import com.itcast.tpms.exp.CourseExp;
 import com.itcast.tpms.exp.CurriculumExp;
 import com.itcast.tpms.exp.OneLevelList;
 import com.itcast.tpms.model.Course;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -51,8 +53,8 @@ public class CurriculumController {
         List<Major> allMajor = majorService.getAllMajor();
         model.addAttribute("majors", allMajor);
 
-        List<Course> allCourse = courseService.getAllCourse();
-        model.addAttribute("courses", allCourse);
+        List<List<CourseExp>> allCourseExp = courseService.getAllCourseExp();
+        model.addAttribute("courseExpsList", allCourseExp);
         return "IPCurriculumPage";
     }
 

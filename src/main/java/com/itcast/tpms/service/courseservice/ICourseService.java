@@ -2,6 +2,7 @@ package com.itcast.tpms.service.courseservice;
 
 import com.itcast.tpms.dto.PageDto;
 import com.itcast.tpms.dto.SearchDto;
+import com.itcast.tpms.exp.CourseExp;
 import com.itcast.tpms.model.Course;
 
 import java.util.List;
@@ -28,5 +29,7 @@ public interface ICourseService {
     boolean updateCourseByIds(Long moduleId, String courseIds[]);
 
     boolean deleteCourseAtModule(Long courseId);
+
+    List<List<CourseExp>> getAllCourseExp();
 
 }

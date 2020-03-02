@@ -60,6 +60,8 @@ public class CurriculumServiceImpl implements ICurriculumService {
         List<CurriculumExp> curriculumExps = new ArrayList<>();
         for (Curriculum curriculum : curricula) {
             CurriculumExp curriculumById = getCurriculumById(curriculum.getId());
+            OneLevelList oneLevelList = seeMore(curriculumById);
+            curriculumById.setOneLevelList(oneLevelList);
             curriculumExps.add(curriculumById);
         }
 

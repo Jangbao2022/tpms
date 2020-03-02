@@ -42,4 +42,6 @@ public class CurriculumExp {
         this.study.studyDoCourse(course);
         this.study.setLack(this.curr);
     }
+
+
 }

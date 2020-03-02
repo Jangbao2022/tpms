@@ -3,18 +3,19 @@ package com.itcast.tpms.service.courseservice.impl;
 import com.itcast.tpms.dto.PageDto;
 import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
+import com.itcast.tpms.exp.CourseExp;
 import com.itcast.tpms.mapper.CourseMapper;
+import com.itcast.tpms.mapper.ModuleMapper;
 import com.itcast.tpms.model.Course;
 import com.itcast.tpms.model.CourseExample;
+import com.itcast.tpms.model.Module;
 import com.itcast.tpms.service.courseservice.ICourseService;
 import com.itcast.tpms.utils.currmidUtil.impl.CurrmidUtil;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CourseServiceImpl implements ICourseService {
@@ -24,6 +25,10 @@ public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     private CurrmidUtil currmidUtil;
+
+    @Autowired
+    private ModuleMapper moduleMapper;
+
 
     @Override
     public PageDto<Course> getCourseBySearchDto(SearchDto searchDto) {
@@ -52,6 +57,27 @@ public class CourseServiceImpl implements ICourseService {
     public List<Course> getAllCourse() {
         List<Course> courses = courseMapper.selectByExample(new CourseExample());
         return courses;
+    }
+
+    @Override
+    public List<List<CourseExp>> getAllCourseExp() {
+        HashMap<Long, List<CourseExp>> map = new HashMap<>();
+        List<Course> allCourse = getAllCourse();
+        for (Course course : allCourse) {
+            CourseExp courseExp = new CourseExp();
+            courseExp.setCourse(course);
+            Long moduleId = course.getModuleId();
+            courseExp.setTwoModuleName(moduleMapper.selectByPrimaryKey(moduleId).getName());
+            if (!map.containsKey(moduleId)) {
+                map.put(moduleId, new ArrayList<>());
+            }
+            map.get(moduleId).add(courseExp);
+        }
+        List<List<CourseExp>> courseExpsList = new ArrayList<>();
+        for (Long key : map.keySet()) {
+            courseExpsList.add(map.get(key));
+        }
+        return courseExpsList;
     }
 
     @Override

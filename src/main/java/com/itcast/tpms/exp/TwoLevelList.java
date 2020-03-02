@@ -16,14 +16,17 @@ public class TwoLevelList {
     private String moduleName;
     private List<CourseExpList> twoLevels = new ArrayList<>();
     private Integer totalCredit;
+    private Integer totalClassHour;
     private Integer totalCourse;
 
     public void init() {
         totalCredit = 0;
+        totalClassHour = 0;
         totalCourse = 1;
         for (CourseExpList courseList : twoLevels) {
             moduleName = courseList.getCourseExps().get(0).getOneModuleName();
             courseList.init();
+            totalClassHour += courseList.getTotalClassHour();
             totalCourse += courseList.getTotalCourse();
             totalCredit += courseList.getTotalCredit();
         }

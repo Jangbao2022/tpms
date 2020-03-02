@@ -55,7 +55,11 @@
                                         <!--<td th:text="${course.type==1?'必':'选'}+'修'">Prohaska</td>-->
                                         <td th:text="${course.credit}">Prohaska</td>
 
-                                        <td th:text="${course.courseQuality}">@Genelia</td>
+                                        <td th:if="${course.courseQuality==1}" th:text="核心必修">@Genelia</td>
+                                        <td th:if="${course.courseQuality==2}" th:text="必修">@Genelia</td>
+                                        <td th:if="${course.courseQuality==3}" th:text="选修">@Genelia</td>
+
+
                                         <td th:text="${course.assessmentMethod==1?'考试':'考查'}">@Genelia</td>
 
                                         <td th:text="${course.classHour}">@Genelia</td>

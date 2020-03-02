@@ -5,32 +5,11 @@ Email: niravjoshi87@gmail.com
 File: js
 */
 
-//总共必修学分
-var totalObligatoryCredit = 20;
-//缺少必修学分
-var lackObligatoryCredit = 0;
+var names = ['必修', '选修'];
+var credits = [10, 10];
+var classHours = [10, 10];
 
-//总共必修学时
-var totalObligatoryClassHour = 30;
-//缺少必修学分
-var lackObligatoryClassHour = 0;
-
-//总共选修学分
-var totalElectiveCredit = 10;
-//缺少选修学分
-var lackElectiveCredit = 0;
-
-//总共选修学时
-var totalElectiveClassHour = 10;
-//缺少选修学时
-var lackElectiveClassHour = 0;
-
-var chart_data_columns = [['必修学分', totalObligatoryCredit],
-        ['选修学分', totalElectiveCredit],
-        ['缺少必修学分', lackObligatoryCredit],
-        ['缺少选修学分', lackElectiveCredit],
-    ]
-;
+var chart_data_columns = [[names[0], credits[0]], [names[1], credits[1]]];
 
 var chart_donut_title = "学分";
 
@@ -39,24 +18,21 @@ var draftType = 1;//为1绘制学时,为2绘制学分
 var preElement;//前一个被点击的curr行元素
 
 function changeDraftType(type) {
+    chart_data_columns = [];
     draftType = type;
     if (type == 1) {
-        chart_data_columns = [['必修学分', totalObligatoryCredit],
-            ['选修学分', totalElectiveCredit],
-            ['缺少必修学分', lackObligatoryCredit],
-            ['缺少选修学分', lackElectiveCredit],
-        ]
+        for (i = 0; i < names.length; i++) {
+            chart_data_columns.push([names[i], [credits[i]]]);
+        }
         chart_donut_title = '学分';
         document.getElementById("change1").removeAttribute("style")
         document.getElementById("change2").removeAttribute("style")
         document.getElementById("change1").setAttribute("style", "color:#24d2b5")
 
     } else {
-        chart_data_columns = [['必修学时', totalObligatoryClassHour],
-            ['选修学时', totalElectiveClassHour],
-            ['缺少必修学时', lackObligatoryClassHour],
-            ['缺少选修学时', lackElectiveClassHour],
-        ]
+        for (i = 0; i < names.length; i++) {
+            chart_data_columns.push([names[i], [classHours[i]]]);
+        }
         chart_donut_title = '学时';
         document.getElementById("change1").removeAttribute("style")
         document.getElementById("change2").removeAttribute("style")
@@ -72,19 +48,13 @@ function draft(element) {
     }
     element.setAttribute("style", "color:#24d2b5");
     preElement = element;
-
-    var studyData = element.getAttribute("data-study");
-    var data = studyData.split(" ");
-    totalObligatoryCredit = data[0];
-    totalObligatoryClassHour = data[1];
-    totalElectiveCredit = data[2];
-    totalElectiveClassHour = data[3];
-
-    lackObligatoryCredit = data[4];
-    lackObligatoryClassHour = data[5];
-    lackElectiveCredit = data[6];
-    lackElectiveClassHour = data[7];
-
+    // debugger;
+    var dataNames = element.getAttribute("data-names");
+    var dataCredits = element.getAttribute("data-credits");
+    var dataClassHours = element.getAttribute("data-classHours");
+    names = dataNames.split(" ");
+    credits = dataCredits.split(" ");
+    classHours = dataClassHours.split(" ");
     changeDraftType(1);
 }
 
@@ -111,7 +81,7 @@ function draftCircle(type) {
                 hide: false
             },
             color: {
-                pattern: ['#42e34d', '#24d2b5', '#d27b4d', '#ff1210']
+                pattern: ['#42e34d', '#E30E08', '#2a43e3', '#e3d92f', '#dce3cb', '#ff713b', '#3fe395']
             }
         }
     );
