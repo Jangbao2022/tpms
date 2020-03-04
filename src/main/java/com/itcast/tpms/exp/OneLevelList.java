@@ -30,6 +30,9 @@ public class OneLevelList {
 
     public String oneLevelNameString() {
         String string = "";
+        if (oneLevels.size() == 0) {
+            return string;
+        }
         for (TwoLevelList oneLevel : oneLevels) {
             string += oneLevel.getModuleName() + " ";
         }
@@ -37,7 +40,11 @@ public class OneLevelList {
     }
 
     public String oneLevelClassHourString() {
+
         String string = "";
+        if (oneLevels.size() == 0) {
+            return string;
+        }
         for (TwoLevelList oneLevel : oneLevels) {
             string += oneLevel.getTotalClassHour() + " ";
         }
@@ -46,6 +53,9 @@ public class OneLevelList {
 
     public String oneLevelCreditString() {
         String string = "";
+        if (oneLevels.size() == 0) {
+            return string;
+        }
         for (TwoLevelList oneLevel : oneLevels) {
             string += oneLevel.getTotalCredit() + " ";
         }

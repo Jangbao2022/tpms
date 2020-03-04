@@ -123,6 +123,14 @@ public class CurriculumServiceImpl implements ICurriculumService {
         return delete == 1;
     }
 
+    public void deleteCurrMid(Long curriculumId, Integer type) {
+        currmidUtil.deleteCurr(curriculumId, type);
+    }
+
+    public boolean deleteCurriculumById(Long curriculumId) {
+        return curriculumMapper.deleteByPrimaryKey(curriculumId) == 1;
+    }
+
     @Override
     public boolean addOrUpdateCurriculum(Curriculum curriculum, Integer type) {
         if (curriculum.getCurrent().equals(1)) {
@@ -145,9 +153,11 @@ public class CurriculumServiceImpl implements ICurriculumService {
         List<Curriculum> curricula = curriculumMapper.selectByExample(example);
 
         for (Curriculum curriculum : curricula) {
-            deleteCurriculum(curriculum.getId(), 1);
-            deleteCurriculum(curriculum.getId(), 2);
+            deleteCurrMid(curriculum.getId(), 1);
+            deleteCurrMid(curriculum.getId(), 2);
+            deleteCurriculumById(curriculum.getId());
         }
+
     }
 
     @Override
