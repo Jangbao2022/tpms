@@ -3,8 +3,10 @@ package com.itcast.tpms.service.majorService.impl;
 import com.itcast.tpms.dto.PageDto;
 import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
+import com.itcast.tpms.mapper.CurriculumMapper;
 import com.itcast.tpms.mapper.MajorMapper;
 import com.itcast.tpms.mapper.UserMapper;
+import com.itcast.tpms.model.CurriculumExample;
 import com.itcast.tpms.model.Major;
 import com.itcast.tpms.model.MajorExample;
 import com.itcast.tpms.model.UserExample;
@@ -23,6 +25,8 @@ public class MajorServiceImpl implements IMajorService {
     private MajorMapper majorMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CurriculumMapper curriculumMapper;
 
     @Override
     public PageDto<Major> getMajorBySearchDto(SearchDto searchDto) {
@@ -87,6 +91,12 @@ public class MajorServiceImpl implements IMajorService {
 
     @Override
     public boolean checkDeleteById(Long majorId) {
+        CurriculumExample example1 = new CurriculumExample();
+        example1.createCriteria().andMajorIdEqualTo(majorId);
+        long l = curriculumMapper.countByExample(example1);
+        if (l != 0) {
+            return false;
+        }
         UserExample example = new UserExample();
         example.createCriteria().andMajorIdEqualTo(majorId);
         long count = userMapper.countByExample(example);
