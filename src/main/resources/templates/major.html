@@ -57,6 +57,8 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                                <div th:if="${message!=null}" class="alert alert-danger" role="alert"
+                                     th:text="${message}"></div>
                                 <nav th:replace="fragment::changePage"></nav>
                             </div>
                         </div>

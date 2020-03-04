@@ -10,6 +10,7 @@ import com.itcast.tpms.mapper.ModuleMapper;
 import com.itcast.tpms.model.*;
 import com.itcast.tpms.service.moduleService.IModuleService;
 import org.apache.ibatis.session.RowBounds;
+import org.jcp.xml.dsig.internal.MacOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -109,7 +110,23 @@ public class ModuleServiceImpl implements IModuleService {
 
     @Override
     public boolean deleteModuleById(Long moduleId) {
+        if (!checkDeleteModule(moduleId)) {
+            return false;
+        }
         int delete = moduleMapper.deleteByPrimaryKey(moduleId);
         return delete == 1;
+    }
+
+    private boolean checkDeleteModule(Long moduleId) {
+        ModuleExample example1 = new ModuleExample();
+        example1.createCriteria().andPreLevelIdEqualTo(moduleId);
+        long l = moduleMapper.countByExample(example1);
+        if (l != 0) {
+            return false;
+        }
+        CourseExample example = new CourseExample();
+        example.createCriteria().andModuleIdEqualTo(moduleId);
+        long count = courseMapper.countByExample(example);
+        return count == 0;
     }
 }

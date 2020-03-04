@@ -27,4 +27,5 @@ public interface IModuleService {
     boolean deleteModuleById(Long moduleId);
 
     ModuleExp getModuleById(Long moduleId);
+
 }

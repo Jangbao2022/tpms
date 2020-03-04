@@ -5,6 +5,7 @@ import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
 import com.itcast.tpms.mapper.CourseMapper;
 import com.itcast.tpms.mapper.MajorMapper;
+import com.itcast.tpms.mapper.UserMapper;
 import com.itcast.tpms.model.*;
 import com.itcast.tpms.service.majorService.IMajorService;
 import org.apache.ibatis.session.RowBounds;
@@ -19,6 +20,8 @@ public class MajorServiceImpl implements IMajorService {
 
     @Autowired
     private MajorMapper majorMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public PageDto<Major> getMajorBySearchDto(SearchDto searchDto) {
@@ -79,5 +82,13 @@ public class MajorServiceImpl implements IMajorService {
     public boolean deleteMajorById(Long majorId) {
         int delete = majorMapper.deleteByPrimaryKey(majorId);
         return delete == 1;
+    }
+
+    @Override
+    public boolean checkDeleteById(Long majorId) {
+        UserExample example = new UserExample();
+        example.createCriteria().andMajorIdEqualTo(majorId);
+        long count = userMapper.countByExample(example);
+        return count == 0;
     }
 }

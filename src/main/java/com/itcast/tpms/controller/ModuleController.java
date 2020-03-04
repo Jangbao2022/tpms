@@ -59,9 +59,12 @@ public class ModuleController {
 //    }
 
     @RequestMapping("deleteModuleById")
-    public String deleteModuleById(Long moduleId) {
-        moduleService.deleteModuleById(moduleId);
-        return "redirect:/module/getModuleByPage";
+    public String deleteModuleById(Long moduleId, Model model) {
+        boolean b = moduleService.deleteModuleById(moduleId);
+        if (!b) {
+            model.addAttribute("message", "无法删除,其他地方存在引用");
+        }
+        return "forward:/module/getModuleByPage";
     }
 
     @RequestMapping("addOrUpdateModule")

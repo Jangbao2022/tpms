@@ -49,9 +49,14 @@ public class MajorController {
     }
 
     @RequestMapping("deleteMajorById")
-    public String deleteMajorById(Long majorId) {
+    public String deleteMajorById(Long majorId, Model model) {
+        boolean b = majorService.checkDeleteById(majorId);
+        if (!b) {
+            model.addAttribute("message", "无法删除,其他地方存在引用");
+            return "forward:/major/getMajorByPage";
+        }
         curriculumService.deleteCurrByMajorId(majorId);
         majorService.deleteMajorById(majorId);
-        return "redirect:/major/getMajorByPage";
+        return "forward:/major/getMajorByPage";
     }
 }

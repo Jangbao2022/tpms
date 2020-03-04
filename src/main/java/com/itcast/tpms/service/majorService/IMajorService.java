@@ -24,4 +24,6 @@ public interface IMajorService {
     boolean deleteMajorById(Long majorId);
 
     Major getMajorById(Long majorId);
+
+    boolean checkDeleteById(Long majorId);
 }
