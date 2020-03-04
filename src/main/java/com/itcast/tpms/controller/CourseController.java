@@ -52,10 +52,9 @@ public class CourseController {
 
         boolean b = courseService.deleteCourse(courseId);
         if (!b) {
-            model.addAttribute("message", "无法删除,可能存在级联关系");
-            return "forward:/error";
+            model.addAttribute("message", "无法删除,其他地方存在引用");
         }
-        return "redirect:/course/getCourseByPage";
+        return "forward:/course/getCourseByPage";
     }
 
     @RequestMapping("addOrUpdateCourse")

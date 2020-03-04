@@ -72,6 +72,6 @@ public class UserController {
     @RequestMapping("deleteUserById")
     public String deleteUserById(Long userId) {
         userService.deleteUserById(userId);
-        return "redirect:/user/getUerByPage";
+        return "redirect:/user/getUserByPage";
     }
 }
