@@ -8,7 +8,6 @@ import com.itcast.tpms.mapper.CourseMapper;
 import com.itcast.tpms.mapper.ModuleMapper;
 import com.itcast.tpms.model.Course;
 import com.itcast.tpms.model.CourseExample;
-import com.itcast.tpms.model.Module;
 import com.itcast.tpms.service.courseservice.ICourseService;
 import com.itcast.tpms.utils.currmidUtil.impl.CurrmidUtil;
 import org.apache.ibatis.session.RowBounds;

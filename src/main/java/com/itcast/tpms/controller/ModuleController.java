@@ -3,7 +3,6 @@ package com.itcast.tpms.controller;
 import com.itcast.tpms.dto.PageDto;
 import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageLimitEnum;
-import com.itcast.tpms.exp.CurriculumExp;
 import com.itcast.tpms.exp.ModuleExp;
 import com.itcast.tpms.model.Course;
 import com.itcast.tpms.model.Module;

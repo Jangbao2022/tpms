@@ -5,12 +5,13 @@ import com.itcast.tpms.dto.SearchDto;
 import com.itcast.tpms.enums.PageUrlEnum;
 import com.itcast.tpms.exp.ModuleExp;
 import com.itcast.tpms.mapper.CourseMapper;
-import com.itcast.tpms.mapper.MajorMapper;
 import com.itcast.tpms.mapper.ModuleMapper;
-import com.itcast.tpms.model.*;
+import com.itcast.tpms.model.Course;
+import com.itcast.tpms.model.CourseExample;
+import com.itcast.tpms.model.Module;
+import com.itcast.tpms.model.ModuleExample;
 import com.itcast.tpms.service.moduleService.IModuleService;
 import org.apache.ibatis.session.RowBounds;
-import org.jcp.xml.dsig.internal.MacOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
