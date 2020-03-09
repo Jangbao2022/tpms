@@ -15,12 +15,12 @@ public class TwoLevelList {
 
     private String moduleName;
     private List<CourseExpList> twoLevels = new ArrayList<>();
-    private Integer totalCredit;
+    private Float totalCredit;
     private Integer totalClassHour;
     private Integer totalCourse;
 
     public void init() {
-        totalCredit = 0;
+        totalCredit = 0.f;
         totalClassHour = 0;
         totalCourse = 1;
         for (CourseExpList courseList : twoLevels) {

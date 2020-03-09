@@ -13,9 +13,9 @@ import lombok.Data;
 public class Study {
 
     //总共必修学分
-    private Integer totalObligatoryCredit = 10;
+    private Float totalObligatoryCredit = 10.f;
     //缺少必修学分
-    private Integer lackObligatoryCredit = 0;
+    private Float lackObligatoryCredit = 0.f;
 
     //总共必修学时
     private Integer totalObligatoryClassHour = 10;
@@ -23,9 +23,9 @@ public class Study {
     private Integer lackObligatoryClassHour = 0;
 
     //总共选修学分
-    private Integer totalElectiveCredit = 10;
+    private Float totalElectiveCredit = 10.f;
     //缺少选修学分
-    private Integer lackElectiveCredit = 0;
+    private Float lackElectiveCredit = 0.f;
 
     //总共选修学时
     private Integer totalElectiveClassHour = 10;
@@ -52,12 +52,12 @@ public class Study {
             this.lackElectiveClassHour = lackECH;
         }
         //缺少必修学分
-        int lackOC = curriculum.getNeedObligatoryCredit() - this.totalObligatoryCredit;
+        float lackOC = curriculum.getNeedObligatoryCredit() - this.totalObligatoryCredit;
         if (lackOC > 0) {
             this.lackObligatoryCredit = lackOC;
         }
         //缺少必修学分
-        int lackEC = curriculum.getNeedElectiveCredit() - this.totalElectiveCredit;
+        float lackEC = curriculum.getNeedElectiveCredit() - this.totalElectiveCredit;
         if (lackEC > 0) {
             this.lackElectiveCredit = lackEC;
         }

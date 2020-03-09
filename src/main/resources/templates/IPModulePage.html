@@ -87,7 +87,8 @@
                                                class="btn btn-success">全选</a>
                                             <a onclick="checked(2)"
                                                style="margin-left: 30px;font-size: 1px;background: white;"
-                                               class="btn btn-success">全不选</a></label>
+                                               class="btn btn-success">全不选</a>
+                                        </label>
                                         <div class="col-md-12">
                                             <div style="width: 20%; float: left;" th:each="course:${courses}">
                                                 <div th:if="${moduleExp!=null&&moduleExp.courseIds.contains(course.id)}">
