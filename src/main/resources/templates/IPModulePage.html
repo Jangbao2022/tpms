@@ -108,24 +108,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <script>
-                                        function openWindow(courseId) {
-                                            window.open('/course/getCourseById?courseId=' + courseId);
-                                        }
 
-                                        function checked(type) {
-                                            var elementsByName = document.getElementsByName('courseId');
-                                            for (var index in elementsByName) {
-                                                if (type == 1) {
-                                                    elementsByName[index].setAttribute("checked", "checked");
-                                                } else {
-                                                    elementsByName[index].removeAttribute("checked");
-                                                }
-                                            }
-                                        }
-
-
-                                    </script>
                                 </div>
                                 <div class="form-group" style="margin-top: 5%">
                                     <div class="col-sm-12">
@@ -142,6 +125,20 @@
     </div>
 </div>
 <script src="/assets/node_modules/jquery/jquery.min.js"></script>
+<script>
+    function openWindow(courseId) {
+        window.open('/course/getCourseById?courseId=' + courseId);
+    }
+
+    function checked(type) {
+        if (type == 1) {
+            $("input[name='courseId']").prop('checked', true);
+        } else {
+            $("input[name='courseId']").prop('checked', false);
+        }
+    }
+
+</script>
 <!-- Bootstrap tether Core JavaScript -->
 <script src="/assets/node_modules/bootstrap/js/popper.min.js"></script>
 <script src="/assets/node_modules/bootstrap/js/bootstrap.min.js"></script>

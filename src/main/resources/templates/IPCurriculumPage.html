@@ -126,25 +126,6 @@
 
                                         </div>
 
-                                        <script>
-                                            function openWindow(courseId, currId) {
-                                                var elementById = document.getElementById(courseId);
-                                                if (elementById.checked) {
-                                                    window.open('/curriculum/setCourseClassHour?courseId=' + courseId + '&curriculumId=' + currId);
-                                                }
-                                            }
-
-                                            function checkCourses(type) {
-                                                var elementsByName = document.getElementsByName('courseId');
-                                                for (var index in elementsByName) {
-                                                    if (type == 1) {
-                                                        elementsByName[index].setAttribute("checked", "checked");
-                                                    } else {
-                                                        elementsByName[index].removeAttribute("checked");
-                                                    }
-                                                }
-                                            }
-                                        </script>
                                     </div>
                                 </div>
 
@@ -197,6 +178,23 @@
 </div>
 </div>
 <script src="../assets/node_modules/jquery/jquery.min.js"></script>
+
+<script>
+    function openWindow(courseId, currId) {
+        var elementById = document.getElementById(courseId);
+        if (elementById.checked) {
+            window.open('/curriculum/setCourseClassHour?courseId=' + courseId + '&curriculumId=' + currId);
+        }
+    }
+
+    function checkCourses(type) {
+        if (type == 1) {
+            $("input[name='courseId']").prop('checked', true);
+        } else {
+            $("input[name='courseId']").prop('checked', false);
+        }
+    }
+</script>
 <!-- Bootstrap popper Core JavaScript -->
 <script src="../assets/node_modules/bootstrap/js/popper.min.js"></script>
 <script src="../assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
