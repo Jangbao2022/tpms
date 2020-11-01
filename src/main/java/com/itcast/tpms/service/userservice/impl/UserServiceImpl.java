@@ -46,8 +46,8 @@ public class UserServiceImpl implements IUserService {
         for (User user : users) {
             UserExp userExp = new UserExp();
             userExp.setTitle(UserPowerEnum.getDescribe(user.getPower()));
-            byte[] bytes = PasswordUtil.decryptBASE64(user.getPassword());
-            user.setPassword(new String(bytes));
+            String pass = PasswordUtil.decryptBASE64(user.getPassword());
+            user.setPassword(pass);
             //设置密码不可见
             user.setPassword(user.getPassword().replaceAll(".", "*"));
             userExp.setUser(user);

@@ -36,8 +36,8 @@ public class LoginServiceImpl implements ILoginService {
         List<User> users = userMapper.selectByExample(example);
         if (users.size() == 1) {
             User checkedUser = users.get(0);
-            byte[] bytes = PasswordUtil.decryptBASE64(checkedUser.getPassword());
-            checkedUser.setPassword(new String(bytes));
+            String pass = PasswordUtil.decryptBASE64(checkedUser.getPassword());
+            checkedUser.setPassword(pass);
             return checkedUser;
         }
         return null;

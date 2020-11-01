@@ -7,9 +7,9 @@ import java.io.IOException;
 
 public class PasswordUtil {
 
-    public static byte[] decryptBASE64(String key) {
+    public static String decryptBASE64(String key) {
         try {
-            return (new BASE64Decoder()).decodeBuffer(key);
+            return new String((new BASE64Decoder()).decodeBuffer(key));
         } catch (IOException e) {
             e.printStackTrace();
         }
